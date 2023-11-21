@@ -18,3 +18,7 @@ services:
 networks:
   smart-shell-net:  # Definición de la red smart-shell-net
     external: true   # Indicador de que la red ya está creada externamente
+deploy:
+  resources:
+    limits:
+      memory: 2G # Límite de memoria para el contenedor
