@@ -6,8 +6,9 @@ CREATE ROLE developer;
 CREATE ROLE application_smartshell;
 
 -- Privileges to schema ( All )
-GRANT ALL PRIVILEGES ON SCHEMA smartshell TO developer;
-GRANT ALL PRIVILEGES ON SCHEMA smartshell TO application_smartshell;
+GRANT ALL PRIVILEGES ON SCHEMA smartshell TO developer, application_smartshell;
+ALTER DEFAULT PRIVILEGES IN SCHEMA smartshell
+    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO developer, application_smartshell;
 
 -- User and Privileges
 CREATE USER luis122448 WITH PASSWORD '1073741824' LOGIN;
