@@ -1,0 +1,14 @@
+version: '3.8'  # Puedes ajustar la versión según la que desees usar
+
+services:
+  postgres:
+    container_name: postgres-prod
+    image: postgres
+    environment:
+      POSTGRES_USER: <user>
+      POSTGRES_PASSWORD: <password>
+      POSTGRES_DB: smart-shell
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
