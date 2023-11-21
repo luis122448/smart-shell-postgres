@@ -18,7 +18,6 @@ GRANT developer TO luis122448;
 GRANT application_smartshell TO user_smartshell;
 
 -- User schema default
-ALTER ROLE postgres SET search_path = public;
 ALTER ROLE application_smartshell SET search_path = smartshell;
 ALTER ROLE developer SET search_path = smartshell;
 

@@ -2,7 +2,7 @@ version: '3.8'  # Puedes ajustar la versión según la que desees usar
 
 services:
   postgres:
-    container_name: postgres-prod
+    container_name: postgres-smart-shell
     image: postgres
     environment:
       POSTGRES_USER: <user>
