@@ -1,3 +1,5 @@
+![Logo del Projecto](./resources/logo.png)
+
 # Despliegue Automatizado de Base de Datos PostgreSQL con Docker
 
 Este repositorio contiene un conjunto de archivos y configuraciones para desplegar y configurar una base de datos PostgreSQL utilizando Docker de forma automatizada.
@@ -24,23 +26,63 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
     ```bash
         git clone https://github.com/luis122448/smart-shell-postgres.git
     ```
-2. **Despliegue de la Base de Datos:**
+
+2. **Modificación del Archivo de Configuración:**
+    ```bash
+        cd smart-shell-postgres
+        nano docker-compose.yml
+    ```
+    Modificar las variables de entorno del *docker-compose* de ser necesario.
+    ```yml
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=<password>
+            - POSTGRES_DB=smart-shell
+    ```
+    
+    ```bash
+        cd smart-shell-postgres/init-scripts
+        nano 01 - SCHEMA AND ROL.sql
+    ```
+    Modificar el script *01 - SCHEMA AND ROL* de inicialización de la base de datos de ser necesario.
+    ```sql
+        CREATE USER luis122448 WITH PASSWORD '<password>' LOGIN;
+        CREATE USER user_smartshell WITH PASSWORD '<password>' LOGIN;
+    ```
+
+3. **Creación de la Red:**
+    ```bash
+        docker network create smart-shell-net
+    ```
+
+4. **Creación de la Imagen:**
+    ```bash
+        cd smart-shell-postgres
+        docker build -t smart-shell-postgres .
+    ```
+
+5. **Despliegue de la Base de Datos:**
     ```bash
         cd smart-shell-postgres
         docker-compose up -d
     ```
 
-3. **Conexion a la Base de Datos.**
+6. **Conexion a la Base de Datos.**
     ```bash
         docker exec -it smart-shell-postgres bash 
     ```
 
-4. **Verificando las versiones.**
+7. **Verificando las versiones.**
     ```bash
         psql --version
         postgres --version
     ```
 
+8. **Ingresando con el usuario condigurado**
+    ```bash
+        psql -U <usuario> --password --db <dbname>
+        <password>
+    ```
 
 ## Personalización
 Puedes personalizar este entorno modificando los scripts SQL en init-scripts/ según las necesidades específicas de tu base de datos. Recuerda mantener el orden numérico en los nombres de los scripts si necesitas un orden específico de ejecución.
