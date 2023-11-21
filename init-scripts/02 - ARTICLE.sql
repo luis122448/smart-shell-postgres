@@ -1,6 +1,6 @@
 SET search_path TO SMARTSHELL;
 
-SELECT current_schema();
+-- SELECT current_schema();
 
 DROP TABLE IF EXISTS TBL_WAREHOUSE;
 

@@ -1,6 +1,6 @@
 SET search_path TO SMARTSHELL;
 
-SELECT current_schema();
+-- SELECT current_schema();
 
 CREATE OR REPLACE FUNCTION number_to_string(input_number bigint)
   RETURNS text
@@ -28,8 +28,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT number_to_string(1234); -- Output: 'one thousand two hundred thirty four'
-SELECT number_to_string(9999); -- Output: 'nine thousand nine hundred ninety nine'
+-- SELECT number_to_string(1234); -- Output: 'one thousand two hundred thirty four'
+-- SELECT number_to_string(9999); -- Output: 'nine thousand nine hundred ninety nine'
 DROP TABLE IF EXISTS TBL_COMPANY_INFO;
 
 CREATE TABLE TBL_COMPANY_INFO(
@@ -53,10 +53,6 @@ CREATE TABLE TBL_COMPANY_INFO(
 ALTER TABLE TBL_COMPANY_INFO
 	ADD CONSTRAINT PK_COMPANY_INFO PRIMARY KEY (NUMINT);
 
--- INSERT INTO TBL_COMPANY_INFO (NUMINT,TYPIDEDOC,NROIDEDOC,COMNAM,ADDRES,POSCOD, GLOSS)
--- VALUES
--- 	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319',pg_read_file('C:\Users\luis122448\Desktop\smart-shell-logo.png')::bytea);
-	
 INSERT INTO TBL_COMPANY_INFO (NUMINT,TYPIDEDOC,NROIDEDOC,COMNAM,ADDRES,POSCOD)
 VALUES
-	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319');
+	(1,1,'01727763541','SMART SHELL','PERU, LIMA, LIMA','15319');

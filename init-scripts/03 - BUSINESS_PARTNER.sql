@@ -1,6 +1,6 @@
 SET search_path TO SMARTSHELL;
 
-SELECT current_schema();
+-- SELECT current_schema();
 
 DROP VIEW IF EXISTS VW_TYPE_PAYMENT_CONDITION;
 
