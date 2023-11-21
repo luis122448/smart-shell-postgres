@@ -69,7 +69,7 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
 
 6. **Conexion a la Base de Datos.**
     ```bash
-        docker exec -it smart-shell-postgres bash 
+        docker exec -it postgres-smart-shell bash
     ```
 
 7. **Verificando las versiones.**
@@ -80,8 +80,12 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
 
 8. **Ingresando con el usuario condigurado**
     ```bash
-        psql -U <usuario> --password --db <dbname>
+        psql -U <usuario> --password --db smart-shell
         <password>
+
+        SET search_path TO SMARTSHELL;
+
+        SELECT * FROM TBL_ARTICLE;
     ```
 
 ## Personalización
