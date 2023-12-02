@@ -6,7 +6,7 @@ Este repositorio contiene un conjunto de archivos y configuraciones para despleg
 
 ## Descripción
 
-El objetivo principal de este proyecto es proporcionar un entorno preconfigurado de PostgreSQL utilizando Docker, permitiendo la automatización del despliegue y la inicialización de la base de datos con scripts SQL predefinidos.
+El objetivo principal de este proyecto es proporcionar un entorno preconfigurado de PostgreSQL utilizando Docker, permitiendo la automatización del despliegue y la inicialización de la base de datos con scripts SQL predefinidos asimismo la automatizacion en la generación y exportación de logs y backups.
 
 ## Configuraciones y Scripts Iniciales
 
@@ -19,7 +19,8 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
   - `04 - DOCUMENT_P0.sql`: Script para ...
   - `05 - DOCUMENT_P1.sql`: Script para ...
   - `06 - DOCUMENT_P2.sql`: Script para ...
-  
+- **configurations**: Archivo con scrips en bash, para configurar y automatizar la generacion de logs y backups de PostgreSQL.
+
 ## Uso
 
 1. **Clonación del Repositorio:**
@@ -27,17 +28,21 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
         git clone https://github.com/luis122448/smart-shell-postgres.git
     ```
 
-2. **Modificación del Archivo de Configuración:**
+2. **Ejecutar el scrip dev-install.sh:**
     ```bash
         cd smart-shell-postgres
-        nano docker-compose.yml
+        bash dev-install.sh
     ```
-    Modificar las variables de entorno del *docker-compose* de ser necesario.
-    ```yml
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=<password>
-            - POSTGRES_DB=smart-shell
+
+2. **Modificar el archivo .env, y asignar las variables de entorno**
+    ```bash
+        nano .env
+    ```
+
+    ```env
+        POSTGRES_USER=postgres
+        POSTGRES_PASSWORD=<password>
+        POSTGRES_DB=smart-shell
     ```
     
     ```bash
@@ -55,23 +60,44 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
         docker network create smart-shell-net
     ```
 
-4. **Creación de la Imagen:**
+## Despliegue en Producción
+
+Para el despliegue en producción se ha utilizado Docker y Docker Compose, puede revisar el archivo docker-compose.yml para conocer los detalles de la configuración.
+Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
+
+1. Ejecutar el script de despliegue
+    
     ```bash
         sudo bash deploy.sh
     ```
-    
-5. **Conexion a la Base de Datos.**
+
+## Revisión del Despliegue
+
+1. **Verificar logs y backups.**
+    Verificar los registros y respaldos generados durante el arranque del contenedor dentro del directorio de tu proyecto:
+
+    ```bash
+        smart-shell-postgres/
+        ├── logs/
+        │   ├── init-2023-12-02.log
+        │   └── log-2023-12-02.log
+        ├── backups/
+        │   └── backup-20231202_134657.sql
+        └── ...
+    ```
+
+2. **Conexion a la Base de Datos.**
     ```bash
         sudo docker exec -it postgres-smart-shell bash
     ```
 
-6. **Verificando las versiones.**
+3. **Verificando las versiones.**
     ```bash
         psql --version
         postgres --version
     ```
 
-7. **Ingresando con el usuario condigurado**
+4. **Ingresando con el usuario condigurado**
     ```bash
         psql -U <usuario> --password --db smart-shell
         <password>
