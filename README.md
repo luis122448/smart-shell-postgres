@@ -57,28 +57,21 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
 
 4. **Creación de la Imagen:**
     ```bash
-        cd smart-shell-postgres
-        docker build -t smart-shell-postgres .
+        sudo bash deploy.sh
     ```
-
-5. **Despliegue de la Base de Datos:**
+    
+5. **Conexion a la Base de Datos.**
     ```bash
-        cd smart-shell-postgres
-        docker-compose up -d
+        sudo docker exec -it postgres-smart-shell bash
     ```
 
-6. **Conexion a la Base de Datos.**
-    ```bash
-        docker exec -it postgres-smart-shell bash
-    ```
-
-7. **Verificando las versiones.**
+6. **Verificando las versiones.**
     ```bash
         psql --version
         postgres --version
     ```
 
-8. **Ingresando con el usuario condigurado**
+7. **Ingresando con el usuario condigurado**
     ```bash
         psql -U <usuario> --password --db smart-shell
         <password>
