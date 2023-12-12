@@ -1,4 +1,4 @@
-SET search_path TO SMARTSHELL;
+SET search_path TO smart_shell;
 
 -- SELECT current_schema();
 
@@ -528,12 +528,6 @@ LANGUAGE plpgsql;
 SELECT * FROM FN_SEARCH_DOCUMENT(1,
 								  TO_DATE('2023-03-01', 'YYYY-MM-DD'),
 								  TO_DATE('2023-06-03', 'YYYY-MM-DD'),'1,2,3,4,5','1,2,3,4,5',NULL,NULL,NULL);
-
-DROP FUNCTION IF EXISTS FN_PRINT_DOCUMENT_INVOCE;
-
-SET search_path TO SMARTSHELL;
-
-SELECT current_schema();
 
 DROP FUNCTION IF EXISTS FN_PRINT_DOCUMENT_INVOCE;
 

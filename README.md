@@ -2,7 +2,7 @@
 
 # Despliegue Automatizado de Base de Datos PostgreSQL con Docker
 
-Este repositorio contiene un conjunto de archivos y configuraciones para desplegar y configurar una base de datos PostgreSQL utilizando Docker de forma automatizada.
+Este repositorio contiene un conjunto de archivos y configuraciones para desplegar y configurar una base de datos PostgreSQL utilizando Docker y Docker Compose.
 
 ## Descripción
 
@@ -21,44 +21,44 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
   - `06 - DOCUMENT_P2.sql`: Script para ...
 - **configurations**: Archivo con scrips en bash, para configurar y automatizar la generacion de logs y backups de PostgreSQL.
 
-## Uso
+## Configuracion del Entorno
 
-1. **Clonación del Repositorio:**
+1. **Clonar el Repositorio**
     ```bash
         git clone https://github.com/luis122448/smart-shell-postgres.git
     ```
 
-2. **Ejecutar el scrip dev-install.sh:**
+2. **Ingresar al directorio del proyecto**
+
     ```bash
         cd smart-shell-postgres
-        bash dev-install.sh
     ```
 
-2. **Modificar el archivo .env, y asignar las variables de entorno**
+3. **Ejecutar el script de instalación**
+    
+    ```bash
+        sudo bash dev-install.sh
+    ```
+
+4. **Defina las credenciales en el archivo .env**
     ```bash
         nano .env
     ```
 
     ```env
-        POSTGRES_USER=postgres
-        POSTGRES_PASSWORD=<password>
-        POSTGRES_DB=smart-shell
-    ```
-    
-    ```bash
-        cd smart-shell-postgres/init-scripts
-        nano 01 - SCHEMA AND ROL.sql
-    ```
-    Modificar el script *01 - SCHEMA AND ROL* de inicialización de la base de datos de ser necesario.
-    ```sql
-        CREATE USER luis122448 WITH PASSWORD '<password>' LOGIN;
-        CREATE USER user_smartshell WITH PASSWORD '<password>' LOGIN;
+        POSTGRES_USERNAME=''
+        POSTGRES_PASSWORD=''
+        POSTGRES_DATABASE=''
     ```
 
-3. **Creación de la Red:**
+5. **Crear (si no existe) el network**
     ```bash
-        docker network create smart-shell-net
+        sudo docker network create smart-shell-net
     ```
+
+## Scripts
+
+El directorio `init-scripts` contiene los scripts que se ejecutarán al iniciar el contenedor, para crear la base de datos, los esquemas, las tablas y los datos iniciales.
 
 ## Despliegue en Producción
 
@@ -73,7 +73,7 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
 
 ## Revisión del Despliegue
 
-1. **Verificar logs y backups.**
+1. **Verificar logs y backups**
     Verificar los registros y respaldos generados durante el arranque del contenedor dentro del directorio de tu proyecto:
 
     ```bash
@@ -86,12 +86,12 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
         └── ...
     ```
 
-2. **Conexion a la Base de Datos.**
+2. **Conexion a la Base de Datos**
     ```bash
-        sudo docker exec -it postgres-smart-shell bash
+        sudo docker exec -it smart-shell-postgres bash
     ```
 
-3. **Verificando las versiones.**
+3. **Verificando las versiones**
     ```bash
         psql --version
         postgres --version

@@ -1,4 +1,4 @@
-SET search_path TO SMARTSHELL;
+SET search_path TO smart_shell;
 
 -- SELECT current_schema();
 
