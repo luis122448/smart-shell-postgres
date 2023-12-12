@@ -41,6 +41,7 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
     ```
 
 4. **Defina las credenciales en el archivo .env**
+
     ```bash
         nano .env
     ```
@@ -52,6 +53,7 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
     ```
 
 5. **Crear (si no existe) el network**
+
     ```bash
         sudo docker network create smart-shell-net
     ```
@@ -65,7 +67,7 @@ El directorio `init-scripts` contiene los scripts que se ejecutarán al iniciar 
 Para el despliegue en producción se ha utilizado Docker y Docker Compose, puede revisar el archivo docker-compose.yml para conocer los detalles de la configuración.
 Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
 
-1. Ejecutar el script de despliegue
+1. **Ejecutar el script de despliegue**
     
     ```bash
         sudo bash deploy.sh
@@ -92,12 +94,14 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
     ```
 
 3. **Verificando las versiones**
+
     ```bash
         psql --version
         postgres --version
     ```
 
 4. **Ingresando con el usuario condigurado**
+
     ```bash
         psql -U <usuario> --password --db smart-shell
         <password>
