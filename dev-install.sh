@@ -13,3 +13,6 @@ mkdir -p logs
 
 # Creando directorio de backups
 mkdir -p backups
+
+# Otorando permisos de ejecucion a los scripts
+chmod +x ./configurations/*.sh

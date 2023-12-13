@@ -106,7 +106,7 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
         psql -U <usuario> --password --db smart-shell
         <password>
 
-        SET search_path TO SMARTSHELL;
+        SET search_path TO SMART_SHELL;
 
         SELECT * FROM TBL_ARTICLE;
     ```
