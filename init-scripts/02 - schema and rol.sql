@@ -1,3 +1,13 @@
+ALTER DATABASE smart_shell SET search_path TO smart_shell;
+ALTER DATABASE smart_shell SET client_encoding TO 'UTF8';
+ALTER DATABASE smart_shell SET lc_collate TO 'es_ES.UTF-8';
+ALTER DATABASE smart_shell SET lc_ctype TO 'es_ES.UTF-8';
+ALTER DATABASE smart_shell SET timezone TO 'America/Lima';
+ALTER DATABASE smart_shell SET datestyle TO 'ISO, DMY';
+ALTER DATABASE smart_shell SET intervalstyle TO 'iso_8601';
+ALTER DATABASE smart_shell SET bytea_output TO 'escape';
+ALTER DATABASE smart_shell SET standard_conforming_strings TO 'on';
+
 -- Schema
 CREATE SCHEMA smart_shell;
 

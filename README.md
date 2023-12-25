@@ -103,7 +103,7 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
 4. **Ingresando con el usuario condigurado**
 
     ```bash
-        psql -U <usuario> --password --db smart-shell
+        psql -U <usuario> --password --db smart_shell
         <password>
 
         SET search_path TO SMART_SHELL;
@@ -113,6 +113,15 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
 
 ## Personalización
 Puedes personalizar este entorno modificando los scripts SQL en init-scripts/ según las necesidades específicas de tu base de datos. Recuerda mantener el orden numérico en los nombres de los scripts si necesitas un orden específico de ejecución.
+
+## Cadena de Conexion
+ Configuracion para un proyecto de JAVA con SPRING BOOT (application.properties).
+    ```properties
+        # Postgres configuration
+        spring.datasource.postgresql.url=jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DATABASE}
+        spring.datasource.postgresql.username=${POSTGRES_USERNAME}
+        spring.datasource.postgresql.password=${POSTGRES_PASSWORD}
+    ```
 
 ## Contribuciones
 Las contribuciones son bienvenidas. Siéntete libre de mejorar este proyecto, agregar nuevas características o corregir problemas identificados. Para contribuir, crea un Pull Request o abre un Issue.
