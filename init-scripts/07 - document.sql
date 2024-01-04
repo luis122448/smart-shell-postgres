@@ -75,10 +75,10 @@ CREATE TABLE TBL_SERIE_COMMERCIAL_DOCUMENT(
 	DOCELECTR VARCHAR(1),
 	TYPCORREL VARCHAR(1),
 	NROCORREL BIGINT,
-	DEFECT VARCHAR(1),
 	TYPFORMAT INTEGER,
 	OBSERV VARCHAR(500),
 	COMMEN VARCHAR(4000),
+	DEFAUL VARCHAR(1) DEFAULT 'N',
 	STATUS VARCHAR(1) DEFAULT 'Y',
 	CREATEBY VARCHAR(10) DEFAULT 'ADMIN',
 	UPDATEBY VARCHAR(10) DEFAULT 'ADMIN',
@@ -89,7 +89,7 @@ CREATE TABLE TBL_SERIE_COMMERCIAL_DOCUMENT(
 ALTER TABLE TBL_SERIE_COMMERCIAL_DOCUMENT
 	ADD CONSTRAINT PK_SERIE_COMMERCIAL_DOCUMENT PRIMARY KEY (TYPCOMDOC, SERIE); 
 
-INSERT INTO TBL_SERIE_COMMERCIAL_DOCUMENT (TYPCOMDOC, SERIE, ABREVI, DESCRI, DOCELECTR, TYPCORREL, NROCORREL, DEFECT, TYPFORMAT)
+INSERT INTO TBL_SERIE_COMMERCIAL_DOCUMENT (TYPCOMDOC, SERIE, ABREVI, DESCRI, DOCELECTR, TYPCORREL, NROCORREL, DEFAUL, TYPFORMAT)
 VALUES 
 	(1, 'F001', 'FAC-01', 'Electronic Invoice', 'S', 'A', 0, 'S', 1),
 	(1, 'F002', 'FAC-02', 'Manual Invoice', 'S', 'M', 0, 'N', 1),
@@ -230,6 +230,7 @@ CREATE TABLE TBL_REASON_COMMERCIAL_DOCUMENT(
 	CODEXT VARCHAR(100),
 	OBSERV VARCHAR(500),
 	COMMEN VARCHAR(4000),
+	DEFAUL VARCHAR(1) DEFAULT 'N',
 	STATUS VARCHAR(1) DEFAULT 'Y',
 	CREATEBY VARCHAR(10) DEFAULT 'ADMIN',
 	UPDATEBY VARCHAR(10) DEFAULT 'ADMIN',
@@ -240,22 +241,22 @@ CREATE TABLE TBL_REASON_COMMERCIAL_DOCUMENT(
 ALTER TABLE TBL_REASON_COMMERCIAL_DOCUMENT
 	ADD CONSTRAINT PK_MOTIVO_COMERCIAL PRIMARY KEY (TYPCOMDOC,INGSALCOM,REACOMDOC);
 
-INSERT INTO TBL_REASON_COMMERCIAL_DOCUMENT (TYPCOMDOC, INGSALCOM, REACOMDOC, ABREVI, DESCRI, CODEXT, OBSERV)
+INSERT INTO TBL_REASON_COMMERCIAL_DOCUMENT (TYPCOMDOC, INGSALCOM, REACOMDOC, ABREVI, DESCRI, CODEXT, OBSERV,DEFAUL)
 VALUES
-	(1, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)'),
-	(1, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when efe delivery is made after the sale'),
-	(1, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent'),
-	(1, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service'),
-	(1, 1, 5, 'Free Trans', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...'),
-	(1, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial'),
-	(1, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected'),
-	(2, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)'),
-	(2, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when the delivery is made after the sale'),
-	(2, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent'),
-	(2, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service'),
-	(2, 1, 5, 'Free Tran', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...'),
-	(2, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial'),
-	(2, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected');
+	(1, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)','Y'),
+	(1, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when efe delivery is made after the sale','N'),
+	(1, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent','N'),
+	(1, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service','N'),
+	(1, 1, 5, 'Free Trans', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...','N'),
+	(1, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
+	(1, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N'),
+	(2, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)','Y'),
+	(2, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when the delivery is made after the sale','N'),
+	(2, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent','N'),
+	(2, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service','N'),
+	(2, 1, 5, 'Free Tran', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...','N'),
+	(2, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
+	(2, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N');
 	
 SELECT * FROM TBL_REASON_COMMERCIAL_DOCUMENT;
 
