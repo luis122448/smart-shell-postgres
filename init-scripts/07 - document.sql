@@ -44,6 +44,7 @@ CREATE TABLE TBL_FORMAT_COMMERCIAL_DOCUMENT(
 	ABREVI VARCHAR(10),
 	DESCRI VARCHAR(250),
 	FORMAT VARCHAR(250),
+	URL VARCHAR(250),
 	OBSERV VARCHAR(500),
 	COMMEN VARCHAR(4000),
 	DEFAUL VARCHAR(1) DEFAULT 'N',
@@ -57,12 +58,12 @@ CREATE TABLE TBL_FORMAT_COMMERCIAL_DOCUMENT(
 ALTER TABLE TBL_FORMAT_COMMERCIAL_DOCUMENT
 	ADD CONSTRAINT PK_FORMAT_COMMERCIAL_DOCUMENT PRIMARY KEY (TYPCOMDOC,TYPFORMAT);
 
-INSERT INTO TBL_FORMAT_COMMERCIAL_DOCUMENT (TYPCOMDOC,TYPFORMAT,ABREVI,DESCRI,FORMAT,OBSERV,COMMEN,DEFAUL)
+INSERT INTO TBL_FORMAT_COMMERCIAL_DOCUMENT (TYPCOMDOC,TYPFORMAT,ABREVI,DESCRI,FORMAT,URL,OBSERV,COMMEN,DEFAUL)
 VALUES
-(1,1,'INV A4-H','Invoice Format (A4 - Horizontal)','invoce-a4-horizontal.jrxml','','','Y'),
-(1,2,'INV A4-V','Invoice Format (A4 - Vertical)','invoce-a4-vertical.jrxml','','','N'),
-(2,1,'INV A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','','','Y'),
-(2,2,'INV A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','','','Y');
+(1,1,'INV A4-H','Invoice Format (A4 - Horizontal)','invoce-a4-horizontal.jrxml','https://img.freepik.com/psd-premium/formato-plantilla-factura-creativa-excel_664482-848.jpg','','','Y'),
+(1,2,'INV A4-V','Invoice Format (A4 - Vertical)','invoce-a4-vertical.jrxml','https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/23/posts/27333/final_image/word-invoice-final.jpg','','','N'),
+(2,1,'INV A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg','','','Y'),
+(2,2,'INV A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','https://img.freepik.com/free-vector/gradient-real-estate-invoice_23-2149165551.jpg','','','Y');
 
 DROP TABLE IF EXISTS TBL_SERIE_COMMERCIAL_DOCUMENT;
 
