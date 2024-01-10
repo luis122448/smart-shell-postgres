@@ -62,13 +62,20 @@ ALTER TABLE TBL_COMPANY_INFO
 -- 	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319',pg_read_file('C:\Users\luis122448\Desktop\smart-shell-logo.png')::bytea);
 	
 INSERT INTO TBL_COMPANY_INFO (NUMINT,TYPIDEDOC,NROIDEDOC,COMNAM,ADDRES,POSCOD, IMAGE, ICON, LOGO, BACKGROUND, GLOSS)
-VALUES
-	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319',
-  pg_read_file('/opt/resources/archives/smart-shell-400x400.jpg')::bytea,
-  pg_read_file('/opt/resources/archives/smart-shell-200x200.jpg')::bytea,
-  pg_read_file('/opt/resources/archives/smart-shell-200x200.jpg')::bytea,
-  pg_read_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
-  pg_read_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea);
+VALUES (
+    1,
+    1,
+    '01727763541',
+    'Smart Shell',
+    'PERU, LIMA, LIMA',
+    '15319',
+    lo_import('/opt/resources/archives/smart-shell-400x400.jpg'),
+    lo_import('/opt/resources/archives/smart-shell-200x200.jpg'),
+    lo_import('/opt/resources/archives/smart-shell-200x200.jpg'),
+    lo_import('/opt/resources/archives/smart-shell-240x960.jpg'),
+    lo_import('/opt/resources/archives/smart-shell-240x960.jpg')
+);
+
 
 DROP TABLE IF EXISTS TBL_USER;
 
