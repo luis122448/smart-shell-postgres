@@ -5,7 +5,7 @@ LABEL luis122448 <luis122448gmail.com>
 RUN apt-get update && apt-get install -y cron
 
 COPY ./init-scripts ./docker-entrypoint-initdb.d
-# COPY ./configurations ./docker-entrypoint-initdb.d
+COPY ./resources ./opt/resources
 
 # RUN chown -R postgres:postgres ./docker-entrypoint-initdb.d/*.sh
 

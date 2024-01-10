@@ -61,9 +61,14 @@ ALTER TABLE TBL_COMPANY_INFO
 -- VALUES
 -- 	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319',pg_read_file('C:\Users\luis122448\Desktop\smart-shell-logo.png')::bytea);
 	
-INSERT INTO TBL_COMPANY_INFO (NUMINT,TYPIDEDOC,NROIDEDOC,COMNAM,ADDRES,POSCOD)
+INSERT INTO TBL_COMPANY_INFO (NUMINT,TYPIDEDOC,NROIDEDOC,COMNAM,ADDRES,POSCOD, IMAGE, ICON, LOGO, BACKGROUND, GLOSS)
 VALUES
-	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319');
+	(1,1,'01727763541','Smart Shell','PERU, LIMA, LIMA','15319',
+  pg_read_file('/opt/resources/archives/smart-shell-400x400.jpg')::bytea,
+  pg_read_file('/opt/resources/archives/smart-shell-200x200.jpg')::bytea,
+  pg_read_file('/opt/resources/archives/smart-shell-200x200.jpg')::bytea,
+  pg_read_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
+  pg_read_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea);
 
 DROP TABLE IF EXISTS TBL_USER;
 
