@@ -1,5 +1,5 @@
 -- Nombre de la base de datos
-CREATE IF NOT EXISTS DATABASE platform_training;
+CREATE DATABASE IF NOT EXISTS platform_training;
 
 -- Cambia al contexto de la nueva base de datos
 \c platform_training;
