@@ -5,7 +5,7 @@ CREATE DATABASE platform_training;
 \c platform_training;
 
 -- -- Crear un usuario con privilegios de superusuario (puedes personalizar según tus necesidades)
-CREATE USER developer WITH PASSWORD '1073741824' SUPERUSER;
+-- CREATE USER developer WITH PASSWORD '1073741824' SUPERUSER;
 
 -- -- Habilitar las extensiones necesarias (puedes agregar otras según tus necesidades)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
