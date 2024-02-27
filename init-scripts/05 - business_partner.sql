@@ -75,23 +75,23 @@ CREATE TABLE TBL_TYPE_PAYMENT_CONDITION(
 ALTER TABLE TBL_TYPE_PAYMENT_CONDITION
 	ADD CONSTRAINT PK_TYPE_PAYMENT_CONDITION PRIMARY KEY (TYPPAYCON);
 
-INSERT INTO TBL_TYPE_PAYMENT_CONDITION (TYPPAYCON, ABREVI, DESCRI)
+INSERT INTO TBL_TYPE_PAYMENT_CONDITION (TYPPAYCON, ABBREV, DESCRI)
 VALUES 
-	(1, 'CONT', 'PAGO AL CONTADO ( TODO EL IMPORTE SE CANCELA )'),
-	(2, 'CANJE','POR CANJE O INTERCAMBIO DE BIENES'),
-	(3, 'REGALO', 'POR REGALO, TRANFERENCIA GRATUITA, SORTEO, BONO, ...'),
-	(10, 'CRE 7D', 'CREDITO A 7 DIAS'),
-	(11, 'CRE 15D', 'CREDITO A 15 DIAS'),
-	(12, 'CRE 30D', 'CREDITO A 30 DIAS'),
-	(13, 'CRE 45D', 'CREDITO A 45 DIAS'),
-	(14, 'CRE 60D', 'CREDITO A 60 DIAS'),
-	(15, 'CRE 75D', 'CREDITO A 75 DIAS'),
-	(16, 'CRE 90D', 'CREDITO A 90 DIAS'),
-	(17, 'PLAZ X DEF', 'A PLAZO DEFINIDO POR EL VENDEDOR'),
-	(18, 'LETRA 7D', 'CREDITO A LETRA CADA 7 DIAS'),
-	(19, 'LETRA 15D', 'CREDITO A LETRA CADA 15 DIAS'),
-	(20, 'LETRA 30D', 'CREDITO A LETRA CADA 30 DIAS'),
-	(21, 'LET X DEF', 'CREDITO A LETRA A DEFINIR POR EL VENDEDOR');
+	(1, 'Cont', 'Cash payment (full amount paid)'),
+	(2, 'Exch','For exchange or interchange of goods'),
+	(3, 'Gift', 'For gift, free transfer, draw, voucher, ...'),
+	(10, 'Cred 7D', '7 days credit'),
+	(11, 'Cred 15D', '15 days credit'),
+	(12, 'Cred 30D', '30 days credit'),
+	(13, 'Cred 45D', '45 days credit'),
+	(14, 'Cred 60D', '60 days credit'),
+	(15, 'Cred 75D', '75 days credit'),
+	(16, 'Cred 90D', '90 days credit'),
+	(17, 'Term by seller', 'At a term defined by the seller'),
+	(18, 'Note 7D', 'Credit with note every 7 days'),
+	(19, 'Note 15D', 'Credit with note every 15 days'),
+	(20, 'Note 30D', 'Credit with note every 30 days'),
+	(21, 'Note by seller', 'Credit with note to be defined by the seller');
 
 SELECT * FROM TBL_TYPE_PAYMENT_CONDITION;
 

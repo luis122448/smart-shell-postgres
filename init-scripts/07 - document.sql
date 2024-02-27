@@ -23,16 +23,16 @@ ALTER TABLE TBL_TYPE_COMMERCIAL_DOCUMENT
 	
 INSERT INTO TBL_TYPE_COMMERCIAL_DOCUMENT (TYPCOMDOC, ABREVI, DESCRI, CODEXT, OBSERV, COMMEN)
 VALUES
-(1, 'INV', 'Invoice', NULL, 'Document used to support sales', 'Invoice'),
-(2, 'REC', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt'),
-(3, 'CRN', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note'),
-(4, 'DBN', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note'),
-(5, 'PRCOD', 'Purchase Order', NULL, 'Document used to request the acquisition of goods and services', 'Purchase Order'),
-(6, 'QUOTA', 'Quotation', NULL, 'Document used to present a budget for goods and services', 'Quotation'),
-(7, 'RETOD', 'Return Order', NULL, 'Document used to request the return of goods and services', 'Return Order'),
-(8, 'GRIN', 'Internal Goods Receipt', NULL, 'Document used for internal transfer of goods', 'Internal Goods Receipt'),
-(9, 'GOOD', 'Goods Receipt', NULL, 'Document used for the transfer of goods', 'Goods Receipt'),
-(10, 'INVTAK', 'Inventory Taking', NULL, 'Document used to record the inventory count', 'Inventory Taking');
+(1, 'Inv', 'Invoice', NULL, 'Document used to support sales', 'Invoice'),
+(2, 'Rec', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt'),
+(3, 'Crn', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note'),
+(4, 'Dbn', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note'),
+(5, 'Prcod', 'Purchase Order', NULL, 'Document used to request the acquisition of goods and services', 'Purchase Order'),
+(6, 'Quota', 'Quotation', NULL, 'Document used to present a budget for goods and services', 'Quotation'),
+(7, 'Retod', 'Return Order', NULL, 'Document used to request the return of goods and services', 'Return Order'),
+(8, 'Grin', 'Internal Goods Receipt', NULL, 'Document used for internal transfer of goods', 'Internal Goods Receipt'),
+(9, 'Good', 'Goods Receipt', NULL, 'Document used for the transfer of goods', 'Goods Receipt'),
+(10, 'Invtak', 'Inventory Taking', NULL, 'Document used to record the inventory count', 'Inventory Taking');
 
 SELECT * FROM TBL_TYPE_COMMERCIAL_DOCUMENT;
 
@@ -160,33 +160,34 @@ ALTER TABLE TBL_EXCHANGE_RATE
 
 INSERT INTO TBL_EXCHANGE_RATE (REGISTDATE, ORIGEN, DESTIN, EVENTA, ECOMPRA)
 VALUES 
-  ('2023-06-09', 'PEN', 'USD', 3.702, 3.71),
-  ('2023-05-06', 'PEN', 'USD', 3.701, 3.708),
-  ('2023-05-07', 'PEN', 'USD', 3.704, 3.712),
-  ('2023-05-08', 'PEN', 'USD', 3.7, 3.708),
-  ('2023-05-09', 'PEN', 'USD', 3.698, 3.705),
-  ('2023-05-10', 'PEN', 'USD', 3.699, 3.707),
-  ('2023-05-11', 'PEN', 'USD', 3.697, 3.704),
-  ('2023-05-12', 'PEN', 'USD', 3.695, 3.701),
-  ('2023-05-13', 'PEN', 'USD', 3.693, 3.7),
-  ('2023-05-14', 'PEN', 'USD', 3.697, 3.704),
-  ('2023-05-15', 'PEN', 'USD', 3.696, 3.703),
-  ('2023-05-16', 'PEN', 'USD', 3.694, 3.7),
-  ('2023-05-17', 'PEN', 'USD', 3.692, 3.699),
-  ('2023-05-18', 'PEN', 'USD', 3.691, 3.698),
-  ('2023-05-19', 'PEN', 'USD', 3.689, 3.696),
-  ('2023-05-20', 'PEN', 'USD', 3.693, 3.701),
-  ('2023-05-21', 'PEN', 'USD', 3.692, 3.7),
-  ('2023-05-22', 'PEN', 'USD', 3.691, 3.698),
-  ('2023-05-23', 'PEN', 'USD', 3.69, 3.697),
-  ('2023-05-24', 'PEN', 'USD', 3.688, 3.695),
-  ('2023-05-25', 'PEN', 'USD', 3.689, 3.696),
-  ('2023-05-26', 'PEN', 'USD', 3.692, 3.699),
-  ('2023-05-27', 'PEN', 'USD', 3.693, 3.7),
-  ('2023-05-28', 'PEN', 'USD', 3.691, 3.697),
-  ('2023-05-29', 'PEN', 'USD', 3.689, 3.695),
-  ('2023-05-30', 'PEN', 'USD', 3.688, 3.694),
-  ('2023-05-31', 'PEN', 'USD', 3.689, 3.696);
+  ('2024-02-01', 'PEN', 'USD', 3.7, 3.708),
+  ('2024-02-02', 'PEN', 'USD', 3.701, 3.709),
+  ('2024-02-03', 'PEN', 'USD', 3.702, 3.71),
+  ('2024-02-04', 'PEN', 'USD', 3.703, 3.711),
+  ('2024-02-05', 'PEN', 'USD', 3.702, 3.71),
+  ('2024-02-06', 'PEN', 'USD', 3.701, 3.708),
+  ('2024-02-07', 'PEN', 'USD', 3.704, 3.712),
+  ('2024-02-08', 'PEN', 'USD', 3.7, 3.708),
+  ('2024-02-09', 'PEN', 'USD', 3.698, 3.705),
+  ('2024-02-10', 'PEN', 'USD', 3.699, 3.707),
+  ('2024-02-11', 'PEN', 'USD', 3.697, 3.704),
+  ('2024-02-12', 'PEN', 'USD', 3.695, 3.701),
+  ('2024-02-13', 'PEN', 'USD', 3.693, 3.7),
+  ('2024-02-14', 'PEN', 'USD', 3.697, 3.704),
+  ('2024-02-15', 'PEN', 'USD', 3.696, 3.703),
+  ('2024-02-16', 'PEN', 'USD', 3.694, 3.7),
+  ('2024-02-17', 'PEN', 'USD', 3.692, 3.699),
+  ('2024-02-18', 'PEN', 'USD', 3.691, 3.698),
+  ('2024-02-19', 'PEN', 'USD', 3.689, 3.696),
+  ('2024-02-20', 'PEN', 'USD', 3.693, 3.701),
+  ('2024-02-21', 'PEN', 'USD', 3.692, 3.7),
+  ('2024-02-22', 'PEN', 'USD', 3.691, 3.698),
+  ('2024-02-23', 'PEN', 'USD', 3.69, 3.697),
+  ('2024-02-24', 'PEN', 'USD', 3.688, 3.695),
+  ('2024-02-25', 'PEN', 'USD', 3.689, 3.696),
+  ('2024-02-26', 'PEN', 'USD', 3.692, 3.699),
+  ('2024-02-27', 'PEN', 'USD', 3.693, 3.7),
+  ('2024-02-28', 'PEN', 'USD', 3.691, 3.697);
   
 SELECT * FROM TBL_EXCHANGE_RATE;
 
@@ -218,9 +219,9 @@ ALTER TABLE TBL_COMMERCIAL_FACTOR
 INSERT INTO TBL_COMMERCIAL_FACTOR (CODCOMFAC, ABREVI, DESCRI, CODEXT, VCARACTER, VTEXTO, VENTERO,
 								  VDECIMAL, VFREGIS, VCOMMEN, VARCHIVO, OBSERV)
 VALUES
-	(1, 'IGV', 'GENERAL SALES TAX', NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, NULL),
-	(2, 'MONNAC', 'NATIONAL CURRENCY', NULL, NULL, 'PEN', NULL, NULL, NULL, NULL, NULL, NULL),
-	(3, 'MONEXT', 'FOREIGN CURRENCY', NULL, NULL, 'USD', NULL, NULL, NULL, NULL, NULL, NULL);
+	(1, 'Igv', 'General Sales Tax', NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, NULL),
+	(2, 'Monnac', 'National Currency', NULL, NULL, 'PEN', NULL, NULL, NULL, NULL, NULL, NULL),
+	(3, 'Monext', 'Foreign Currency', NULL, NULL, 'USD', NULL, NULL, NULL, NULL, NULL, NULL);
 
 SELECT * FROM TBL_COMMERCIAL_FACTOR;
 
