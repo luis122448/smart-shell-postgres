@@ -75,7 +75,7 @@ CREATE TABLE TBL_TYPE_PAYMENT_CONDITION(
 ALTER TABLE TBL_TYPE_PAYMENT_CONDITION
 	ADD CONSTRAINT PK_TYPE_PAYMENT_CONDITION PRIMARY KEY (TYPPAYCON);
 
-INSERT INTO TBL_TYPE_PAYMENT_CONDITION (TYPPAYCON, ABBREV, DESCRI)
+INSERT INTO TBL_TYPE_PAYMENT_CONDITION (TYPPAYCON, ABREVI, DESCRI)
 VALUES 
 	(1, 'Cont', 'Cash payment (full amount paid)'),
 	(2, 'Exch','For exchange or interchange of goods'),
@@ -87,11 +87,11 @@ VALUES
 	(14, 'Cred 60D', '60 days credit'),
 	(15, 'Cred 75D', '75 days credit'),
 	(16, 'Cred 90D', '90 days credit'),
-	(17, 'Term by seller', 'At a term defined by the seller'),
+	(17, 'Term sell', 'At a term defined by the seller'),
 	(18, 'Note 7D', 'Credit with note every 7 days'),
 	(19, 'Note 15D', 'Credit with note every 15 days'),
 	(20, 'Note 30D', 'Credit with note every 30 days'),
-	(21, 'Note by seller', 'Credit with note to be defined by the seller');
+	(21, 'Note sell', 'Credit with note to be defined by the seller');
 
 SELECT * FROM TBL_TYPE_PAYMENT_CONDITION;
 
