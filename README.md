@@ -2,7 +2,7 @@
 
 # Despliegue Automatizado de Base de Datos PostgreSQL con Docker
 
-Este repositorio contiene un conjunto de configuraciones y scrips SQL para desplegar una base de datos PostgreSQL con toda la información (por defecto) para el proyecto de Smart-Shell ( Facturador Electronico ) y el proyecto de Platform-Training ( Plataforma de Capacitacion ) utilizando Docker y Docker Compose. Asimismo se ha configurado la generación de logs y backups de la base de datos.
+Este repositorio contiene un conjunto de configuraciones y scrips SQL para desplegar una base de datos PostgreSQL con toda la información (por defecto) para el proyecto de Smart-Shell ( Facturador Electronico ) y Platform-Training ( Plataforma de Capacitacion ) utilizando Docker y Docker Compose. Asimismo se ha configurado la generación de logs y backups de la base de datos.
 
 ## Descripción
 
@@ -14,9 +14,17 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
 - [Smart-Shell-Postgres](https://github.com/luis122448/smart-shell-postgres)
 
 ### Proyectos Relacionados
+
+Repositorios referidos al BACKEND y FRONTEND de la aplicacion Smart-Shell y Platform-Training.
 - [Smart-Shell-Angular](https://github.com/luis122448/smart-shell-angular)
 - [Smart-Shell-SpringBoot](https://github.com/luis122448/smart-shell-springboot)
+- [Platform-Training-Angular](https://github.com/luis122448/platform-training-angular)
+- [Platform-Training-SpringBoot](https://github.com/luis122448/platform-training-springboot)
+
+Repositorios relacionado a la automatizacion de despliegue.
 - [Smart-Shell-Bash](https://github.com/luis122448/smart-shell-bash)
+
+Repositorios relacionados a otras bases de datos del proyecto Smart-Shell.
 - [Smart-Shell-Mongo](https://github.com/luis122448/smart-shell-mongo)
 - [Smart-Shell-Redis](https://github.com/luis122448/smart-shell-redis)
 
