@@ -119,7 +119,7 @@ Puedes personalizar este entorno modificando los scripts SQL en init-scripts/ se
 
 ## Cadena de Conexion
  Configuracion para un proyecto de JAVA con SPRING BOOT (application.properties).
-    ```properties
+    ```bash
         # Postgres configuration
         spring.datasource.postgresql.url=jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DATABASE}
         spring.datasource.postgresql.username=${POSTGRES_USERNAME}
