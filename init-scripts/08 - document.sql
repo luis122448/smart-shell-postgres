@@ -56,7 +56,7 @@ BEGIN
 END $$;
 
 -- SEQUENCE BY ALL
-CREATE SEQUENCE GEN_DOCCOM START 1000000;
+CREATE SEQUENCE GEN_DOCCOM START 1000003;
 
 DROP PROCEDURE IF EXISTS PR_CREATE_DOCUMENT_HEADER;
 
@@ -194,34 +194,34 @@ EXCEPTION
 	RETURN;
 END $$;
 
-DO $$
-DECLARE
-	V_DOCUMENT VARCHAR(4000) := '{"numint":null,"codext":"","typcomdoc":1,"sitcomdoc":1,"serie":"F001","numdoc":null,
-	"registdate":[2023,4,28],
-	"codbranch":1,
-	"codplaiss":1,
-	"ingsalcom":1,
-	"reacomdoc":1,
-	"codcur":"PEN",
-	"exchangerate":3.89,
-	"codbuspar":"65498732",
-	"busnam":"Pedro Castillo Chavez",
-	"addres":"Av. Tacna 1213",
-	"poscod":"000000",
-	"codsel":"6800194159",
-	"typpaycon":1,
-	"incigv":1}';
-	V_NUMINT BIGINT;
-	V_CODE INTEGER;
-	V_MESSAGE VARCHAR(1000);
-	V_LOG VARCHAR(1000);
-BEGIN
-	CALL PR_CREATE_DOCUMENT_HEADER(V_DOCUMENT, V_NUMINT, V_CODE, V_MESSAGE, V_LOG);
-	RAISE NOTICE 'NUMINT : %',V_NUMINT;
-	RAISE NOTICE 'CODE: %', V_CODE;
-    RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
-	RAISE NOTICE 'LOG: %', V_LOG;
-END $$;
+-- DO $$
+-- DECLARE
+-- 	V_DOCUMENT VARCHAR(4000) := '{"numint":null,"codext":"","typcomdoc":1,"sitcomdoc":1,"serie":"F001","numdoc":null,
+-- 	"registdate":[2023,4,28],
+-- 	"codbranch":1,
+-- 	"codplaiss":1,
+-- 	"ingsalcom":1,
+-- 	"reacomdoc":1,
+-- 	"codcur":"PEN",
+-- 	"exchangerate":3.89,
+-- 	"codbuspar":"65498732",
+-- 	"busnam":"Pedro Castillo Chavez",
+-- 	"addres":"Av. Tacna 1213",
+-- 	"poscod":"000000",
+-- 	"codsel":"6800194159",
+-- 	"typpaycon":1,
+-- 	"incigv":1}';
+-- 	V_NUMINT BIGINT;
+-- 	V_CODE INTEGER;
+-- 	V_MESSAGE VARCHAR(1000);
+-- 	V_LOG VARCHAR(1000);
+-- BEGIN
+-- 	CALL PR_CREATE_DOCUMENT_HEADER(V_DOCUMENT, V_NUMINT, V_CODE, V_MESSAGE, V_LOG);
+-- 	RAISE NOTICE 'NUMINT : %',V_NUMINT;
+-- 	RAISE NOTICE 'CODE: %', V_CODE;
+--     RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
+-- 	RAISE NOTICE 'LOG: %', V_LOG;
+-- END $$;
 
 SELECT * FROM TBL_DOCUMENT_HEADER;
 
@@ -353,34 +353,34 @@ EXCEPTION
 	RETURN;
 END $$;
  
-DO $$
-DECLARE
-	V_DOCUMENT VARCHAR(4000) := 
-		'{"numint":88,
-		"typinv":1,
-		"codart":"OSAHG",
-		"etiqueta":"5459821654",
-		"quantity":1,
-		"price":10.00,
-		"impafecto":10.00,
-		"impinafecto":0,
-		"impexonerado":0,
-		"impgratuito":0,
-		"impdesc01":0.10,
-		"impdesc02":0.15,
-		"impdesc03":0,
-		"impdesc04":0}';
-	V_NUMITE BIGINT;
-	V_CODE INTEGER;
-	V_MESSAGE VARCHAR(1000);
-	V_LOG VARCHAR(1000);
-BEGIN
-	CALL PR_CREATE_DOCUMENT_DETAIL(V_DOCUMENT, V_NUMITE, V_CODE, V_MESSAGE, V_LOG);
-	RAISE NOTICE 'NUMITE: %', V_NUMITE;
-	RAISE NOTICE 'CODE: %', V_CODE;
-    RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
-	RAISE NOTICE 'LOG: %', V_LOG;
-END $$;
+-- DO $$
+-- DECLARE
+-- 	V_DOCUMENT VARCHAR(4000) := 
+-- 		'{"numint":88,
+-- 		"typinv":1,
+-- 		"codart":"OSAHG",
+-- 		"etiqueta":"5459821654",
+-- 		"quantity":1,
+-- 		"price":10.00,
+-- 		"impafecto":10.00,
+-- 		"impinafecto":0,
+-- 		"impexonerado":0,
+-- 		"impgratuito":0,
+-- 		"impdesc01":0.10,
+-- 		"impdesc02":0.15,
+-- 		"impdesc03":0,
+-- 		"impdesc04":0}';
+-- 	V_NUMITE BIGINT;
+-- 	V_CODE INTEGER;
+-- 	V_MESSAGE VARCHAR(1000);
+-- 	V_LOG VARCHAR(1000);
+-- BEGIN
+-- 	CALL PR_CREATE_DOCUMENT_DETAIL(V_DOCUMENT, V_NUMITE, V_CODE, V_MESSAGE, V_LOG);
+-- 	RAISE NOTICE 'NUMITE: %', V_NUMITE;
+-- 	RAISE NOTICE 'CODE: %', V_CODE;
+--     RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
+-- 	RAISE NOTICE 'LOG: %', V_LOG;
+-- END $$;
 
 SELECT * FROM TBL_DOCUMENT_DETAIL;
 
@@ -448,17 +448,17 @@ EXCEPTION
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 END $$;
 
-DO $$
-DECLARE
-	V_CODE INTEGER;
-	V_MESSAGE VARCHAR(1000);
-	V_LOG VARCHAR(1000);
-BEGIN
-	CALL PR_CALCULATE_IMPORT_DOCUMENT(88, V_CODE, V_MESSAGE, V_LOG);
-	RAISE NOTICE 'CODE: %', V_CODE;
-    RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
-	RAISE NOTICE 'LOG: %', V_LOG;
-END $$;
+-- DO $$
+-- DECLARE
+-- 	V_CODE INTEGER;
+-- 	V_MESSAGE VARCHAR(1000);
+-- 	V_LOG VARCHAR(1000);
+-- BEGIN
+-- 	CALL PR_CALCULATE_IMPORT_DOCUMENT(88, V_CODE, V_MESSAGE, V_LOG);
+-- 	RAISE NOTICE 'CODE: %', V_CODE;
+--     RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
+-- 	RAISE NOTICE 'LOG: %', V_LOG;
+-- END $$;
 
 SELECT * FROM  TBL_DOCUMENT_HEADER;
 
@@ -545,9 +545,9 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-SELECT * FROM FN_SEARCH_DOCUMENT(1,
-								  TO_DATE('2023-03-01', 'YYYY-MM-DD'),
-								  TO_DATE('2023-06-03', 'YYYY-MM-DD'),'1,2,3,4,5','1,2,3,4,5',NULL,NULL,NULL);
+-- SELECT * FROM FN_SEARCH_DOCUMENT(1,
+-- 								  TO_DATE('2023-03-01', 'YYYY-MM-DD'),
+-- 								  TO_DATE('2023-06-03', 'YYYY-MM-DD'),'1,2,3,4,5','1,2,3,4,5',NULL,NULL,NULL);
 
 DROP FUNCTION IF EXISTS FN_PRINT_DOCUMENT_INVOCE;
 
@@ -701,7 +701,7 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
-SELECT * FROM FN_PRINT_DOCUMENT_INVOCE(88);
+-- SELECT * FROM FN_PRINT_DOCUMENT_INVOCE(88);
 
 DROP PROCEDURE IF EXISTS PR_CANCEL_INVOICE;
 
@@ -742,21 +742,21 @@ EXCEPTION
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 END $$;
 
-DO $$
-DECLARE
-	V_CODE INTEGER;
-	V_MESSAGE VARCHAR(1000);
-	V_LOG VARCHAR(1000);
-BEGIN
-	CALL PR_CANCEL_INVOICE(88, V_CODE, V_MESSAGE, V_LOG);
-	RAISE NOTICE 'CODE: %', V_CODE;
-    RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
-	RAISE NOTICE 'LOG: %', V_LOG;
-END $$;
+-- DO $$
+-- DECLARE
+-- 	V_CODE INTEGER;
+-- 	V_MESSAGE VARCHAR(1000);
+-- 	V_LOG VARCHAR(1000);
+-- BEGIN
+-- 	CALL PR_CANCEL_INVOICE(88, V_CODE, V_MESSAGE, V_LOG);
+-- 	RAISE NOTICE 'CODE: %', V_CODE;
+--     RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
+-- 	RAISE NOTICE 'LOG: %', V_LOG;
+-- END $$;
 
-INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000001, NULL, 1, 1, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
-INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000002, NULL, 1, 1, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
-INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000003, NULL, 1, 1, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', NULL, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
+INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000001, NULL, 2, 1, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000002, NULL, 2, 1, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
+INSERT INTO smart_shell.tbl_document_header (numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1000003, NULL, 2, 1, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', NULL, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
 
 INSERT INTO smart_shell.tbl_document_detail (numint, numite, typinv, codart, etiqueta, quantity, price, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, status, createby, updateby, createat, updateat) VALUES (1000001, 1, 1, 'CNKSET', 0, 4.0000, 69.0000, 276.0000, 0.0000, 0.0000, 0.0000, 49.6800, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, NULL, NULL, NULL, NULL, 276.0000, 0.0000, 276.0000, 49.6800, 325.6800, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:46.529571', '2024-03-01 22:51:46.529571');
 INSERT INTO smart_shell.tbl_document_detail (numint, numite, typinv, codart, etiqueta, quantity, price, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, status, createby, updateby, createat, updateat) VALUES (1000001, 2, 1, 'BOW75', 0, 4.0000, 45.0000, 180.0000, 0.0000, 0.0000, 0.0000, 32.4000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, NULL, NULL, NULL, NULL, 180.0000, 0.0000, 180.0000, 32.4000, 212.4000, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:46.705845', '2024-03-01 22:51:46.705845');
