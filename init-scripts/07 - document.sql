@@ -60,7 +60,7 @@ CREATE TABLE TBL_FORMAT_COMMERCIAL_DOCUMENT(
 ALTER TABLE TBL_FORMAT_COMMERCIAL_DOCUMENT
 	ADD CONSTRAINT PK_FORMAT_COMMERCIAL_DOCUMENT PRIMARY KEY (TYPCOMDOC,TYPFORMAT);
 
-INSERT INTO TBL_FORMAT_COMMERCIAL_DOCUMENT (TYPCOMDOC,TYPFORMAT,ABREVI,DESCRI,FORMAT,URL,OBSERV,COMMEN,DEFAUL)
+INSERT INTO TBL_FORMAT_COMMERCIAL_DOCUMENT (TYPCOMDOC,TYPFORMAT,ABREVI,DESCRI,FORMAT,URL,IMAGE,ARCHIVE,OBSERV,COMMEN,DEFAUL)
 VALUES
 (1,1,'INV A4-H','Invoice Format (A4 - Horizontal)','invoce-a4-horizontal.jrxml','https://img.freepik.com/psd-premium/formato-plantilla-factura-creativa-excel_664482-848.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y'),
