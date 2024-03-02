@@ -8,6 +8,18 @@ Este repositorio contiene un conjunto de configuraciones y scrips SQL para despl
 
 El objetivo principal de este proyecto es proporcionar un entorno preconfigurado de PostgreSQL utilizando Docker, permitiendo la automatización del despliegue y la inicialización de la base de datos con scripts SQL predefinidos asimismo la automatizacion en la generación y exportación de logs y backups.
 
+# Proyectos Relacionados
+
+### Proyecto Actual
+- [Smart-Shell-Postgres](https://github.com/luis122448/smart-shell-postgres)
+
+### Proyectos Relacionados
+- [Smart-Shell-Angular](https://github.com/luis122448/smart-shell-angular)
+- [Smart-Shell-SpringBoot](https://github.com/luis122448/smart-shell-springboot)
+- [Smart-Shell-Bash](https://github.com/luis122448/smart-shell-bash)
+- [Smart-Shell-Mongo](https://github.com/luis122448/smart-shell-mongo)
+- [Smart-Shell-Redis](https://github.com/luis122448/smart-shell-redis)
+
 ## Configuraciones y Scripts Iniciales
 
 - **docker-compose.yml**: Archivo de configuración Docker Compose para crear y ejecutar el contenedor de PostgreSQL.
@@ -64,6 +76,7 @@ El objetivo principal de este proyecto es proporcionar un entorno preconfigurado
 ## Scripts
 
 El directorio `init-scripts` contiene los scripts que se ejecutarán al iniciar el contenedor, para crear la base de datos, los esquemas, las tablas y los datos iniciales.
+Adicinalmente el dictorio `scripts` contiene scripts auxiliares y utilitarios.
 
 ## Despliegue en Producción
 
@@ -119,6 +132,7 @@ Puedes personalizar este entorno modificando los scripts SQL en init-scripts/ se
 
 ## Cadena de Conexion
  Configuracion para un proyecto de JAVA con SPRING BOOT (application.properties).
+
     ```bash
         # Postgres configuration
         spring.datasource.postgresql.url=jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DATABASE}
