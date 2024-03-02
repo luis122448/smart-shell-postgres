@@ -8,7 +8,7 @@ Este repositorio contiene un conjunto de configuraciones y scrips SQL para despl
 
 El objetivo principal de este proyecto es proporcionar un entorno preconfigurado de PostgreSQL utilizando Docker, permitiendo la automatización del despliegue y la inicialización de la base de datos con scripts SQL predefinidos asimismo la automatizacion en la generación y exportación de logs y backups.
 
-# Proyectos Relacionados
+## Proyectos Relacionados
 
 ### Proyecto Actual
 - [Smart-Shell-Postgres](https://github.com/luis122448/smart-shell-postgres)
