@@ -23,11 +23,11 @@ ALTER TABLE TBL_TYPE_COMMERCIAL_DOCUMENT
 	
 INSERT INTO TBL_TYPE_COMMERCIAL_DOCUMENT (TYPCOMDOC, ABREVI, DESCRI, CODEXT, OBSERV, COMMEN)
 VALUES
-(1, 'Inv', 'Invoice', NULL, 'Document used to support sales', 'Invoice'),
-(2, 'Rec', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt'),
-(3, 'Crn', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note'),
-(4, 'Dbn', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note'),
-(5, 'Prcod', 'Purchase Order', NULL, 'Document used to request the acquisition of goods and services', 'Purchase Order'),
+(1, 'Invoice', 'Invoice', NULL, 'Document used to support sales', 'Invoice'),
+(2, 'Receipt', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt'),
+(3, 'Cre Note', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note'),
+(4, 'Deb Note', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note'),
+(5, 'Purc Ord', 'Purchase Order', NULL, 'Document used to request the acquisition of goods and services', 'Purchase Order'),
 (6, 'Quota', 'Quotation', NULL, 'Document used to present a budget for goods and services', 'Quotation'),
 (7, 'Retod', 'Return Order', NULL, 'Document used to request the return of goods and services', 'Return Order'),
 (8, 'Grin', 'Internal Goods Receipt', NULL, 'Document used for internal transfer of goods', 'Internal Goods Receipt'),
