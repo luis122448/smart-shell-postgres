@@ -96,99 +96,99 @@ INSERT INTO TBL_ARTICLE (CODART, TYPINV, ABREVI, DESCRI, CODEXT,
                           CODBAR, REGISTDATE, CSTOCK, CODPRV, CODMAN, 
                           CODUNI, IMAGE, OBSERV, COMMEN)
 VALUES 
-   ('OSAHG', 1, 'HERBGC', 'OSA HERB GARDEN KEYCAPS', '', '', 
+   ('OSAHG', 1, 'HERBGC', 'OSA HERB GARDEN KEYCAPS', 'OSAHG', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/HerbGarden-2_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('BPKDC', 1, 'BPK-DC', 'BLACK AND PINK - THE DANCER KEYCAPS', '', '', 
+   ('BPKDC', 1, 'BPK-DC', 'BLACK AND PINK - THE DANCER KEYCAPS', 'BPKDC', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/PurpleandBlack-1_540x.webp')::bytea, NULL, NULL),
 
-   ('MRSGR', 1, 'MRSGRN', 'MARRS GREEN KEYCAPS', '', '', 
+   ('MRSGR', 1, 'MRSGRN', 'MARRS GREEN KEYCAPS', 'MRSGR', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/NewSwitches-17_2048x.webp')::bytea, NULL, NULL),
    
-   ('BLKSIL', 1, 'BLKSVR', 'BLACK AND SILVER KEYCAPS', '', '', 
+   ('BLKSIL', 1, 'BLKSVR', 'BLACK AND SILVER KEYCAPS', 'BLKSIL', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/BlackandSilverHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('PLSH75', 1, 'POLKIT', 'POLISH KEYSET - 75% KITTING', '', '', 
+   ('PLSH75', 1, 'POLKIT', 'POLISH KEYSET - 75% KITTING', 'PLSH75', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/P75FixKits-25_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('BLRP75', 1, 'BLRKIT', 'BLURPLE KEYSET - 75% KITTING', '', '', 
+   ('BLRP75', 1, 'BLRKIT', 'BLURPLE KEYSET - 75% KITTING', 'BLRP75', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/BlurpleHero-1_2048x.webp')::bytea, NULL, NULL),
    
-   ('PT75SMK', 1, 'FAP75', 'FULLY ASSEMBLED PORTICO75 - SMOKE', '', '', 
+   ('PT75SMK', 1, 'FAP75', 'FULLY ASSEMBLED PORTICO75 - SMOKE', 'PT75SMK', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/Copyof215WarehouseWednesday-12_540x.webp')::bytea, NULL, NULL),
    
-   ('PWK75', 1, 'POWK', 'PURPLE ON WHITE KEYSET - 75% KITTING', '', '', 
+   ('PWK75', 1, 'POWK', 'PURPLE ON WHITE KEYSET - 75% KITTING', 'PWK75', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/PurpleonWhiteHero-1_2048x.webp')::bytea, NULL, NULL),
    
-   ('BOW75', 1, 'BOW-K75', 'BLUE ON WHITE KEYSETS - 75% KITTING', '', '', 
+   ('BOW75', 1, 'BOW-K75', 'BLUE ON WHITE KEYSETS - 75% KITTING', 'BOW75', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/BlueonWhiteHero-1_2048x.webp')::bytea, NULL, NULL),
    
-   ('CNKSET', 1, 'CNK-SET', 'CABERNET NOIR KEYSET', '', '', 
+   ('CNKSET', 1, 'CNK-SET', 'CABERNET NOIR KEYSET', 'CNKSET', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/Cabernet2-13_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('EPBT-OGK', 1, 'OGK-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - ORANGE ON GREY', '', '', 
+   ('EPBT-OGK', 1, 'OGK-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - ORANGE ON GREY', 'EPBT-OGK', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/EPBTOrangeonBlackHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('EPBT-SDL', 1, 'SDL-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - SKY DOLCH', '', '', 
+   ('EPBT-SDL', 1, 'SDL-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - SKY DOLCH', 'EPBT-SDL', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/EPBTOrangeonBlackHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('EPBT-DOL', 1, 'DOL-KEYS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - DOLCH', '', '', 
+   ('EPBT-DOL', 1, 'DOL-KEYS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - DOLCH', 'EPBT-DOL', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/EPBTOrangeonBlackHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('EPBT-WOB', 1, 'WOB-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - WOB', '', '', 
+   ('EPBT-WOB', 1, 'WOB-CAPS', 'EPBT DOUBLESHOT ABS CHERRY KEYCAPS - WOB', 'EPBT-WOB', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/EPBTOrangeonBlackHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('KSET-BP', 1, 'BP-KSET', 'BLACK & PURPLE KEYSET', '', '', 
+   ('KSET-BP', 1, 'BP-KSET', 'BLACK & PURPLE KEYSET', 'KSET-BP', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/PurpleandBlackHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('KSET-BRD', 1, 'BRD-KSET', 'BRED KEYSET', '', '', 
+   ('KSET-BRD', 1, 'BRD-KSET', 'BRED KEYSET', 'KSET-BRD', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/BREDHero-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('KSET-WOB', 1, 'WOB-KSET', 'WHITE-ON-BLACK KEYSET', '', '', 
+   ('KSET-WOB', 1, 'WOB-KSET', 'WHITE-ON-BLACK KEYSET', 'KSET-WOB', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/WoB-2-web_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('WBLOCK', 1, 'W-BLOCK', 'WRITER S BLOCK', '', '', 
+   ('WBLOCK', 1, 'W-BLOCK', 'WRITER S BLOCK', 'WBLOCK', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/DSC00280-2_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('POLSH', 1, 'POLSH', 'POLISH', '', '', 
+   ('POLSH', 1, 'POLSH', 'POLISH', 'POLSH', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/Polish-4_c811cb59-fcc0-42e6-b6fe-da6115bbc7fc_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('EQUATKC', 1, 'EQUATKC', 'EQUALZ X TKC FRUIT SMOOTHIE SWITCHES', '', '', 
+   ('EQUATKC', 1, 'EQUATKC', 'EQUALZ X TKC FRUIT SMOOTHIE SWITCHES', 'EQUATKC', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/NewSwitches-14_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('MSHMW1', 1, 'MSHMW1', 'MARSHMALLOW KEYSET', '', '', 
+   ('MSHMW1', 1, 'MSHMW1', 'MARSHMALLOW KEYSET', 'MSHMW1', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/Marshmallow_Production-5_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('FAIPRO', 1, 'MNT-KIT', 'FAIRY PRO (SILENT LINEAR)', '', '', 
+   ('FAIPRO', 1, 'MNT-KIT', 'FAIRY PRO (SILENT LINEAR)', 'FAIPRO', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/124Switches-1_1024x1024.webp')::bytea, NULL, NULL),
    
-   ('PENGPRO', 1, 'PENGPRO', 'PENGUIN PRO (SILENT TACTILE)', '', '', 
+   ('PENGPRO', 1, 'PENGPRO', 'PENGUIN PRO (SILENT TACTILE)', 'PENGPRO', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/124Switches-6_1024x1024.webp')::bytea, NULL, NULL),
 
-   ('KYRBL1', 1, 'KYRBL1', 'KEYREATIVE BLANK KEYSET', '', '', 
+   ('KYRBL1', 1, 'KYRBL1', 'KEYREATIVE BLANK KEYSET', 'KYRBL1', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/switch-swirl_deskmat_alexotos_angle_1920x1080_6418065e-2c45-47c8-b225-ec5a3f693b91_1024x1024.webp')::bytea, NULL, NULL);
 
