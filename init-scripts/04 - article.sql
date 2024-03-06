@@ -192,7 +192,7 @@ VALUES
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
    pg_read_binary_file('/opt/resources/images/article/switch-swirl_deskmat_alexotos_angle_1920x1080_6418065e-2c45-47c8-b225-ec5a3f693b91_1024x1024.webp')::bytea, NULL, NULL);
    
-SELECT * FROM TBL_ARTICLE;
+-- SELECT * FROM TBL_ARTICLE;
 
 DROP TABLE IF EXISTS TBL_LIST_PRICE;
 
