@@ -122,7 +122,7 @@ VALUES
    
    ('PT75SMK', 1, 'FAP75', 'FULLY ASSEMBLED PORTICO75 - SMOKE', '', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
-   pg_read_binary_file('/opt/resources/images/article/Copyof2.15WarehouseWednesday-12_540x.webp')::bytea, NULL, NULL),
+   pg_read_binary_file('/opt/resources/images/article/Copyof215WarehouseWednesday-12_540x.webp')::bytea, NULL, NULL),
    
    ('PWK75', 1, 'POWK', 'PURPLE ON WHITE KEYSET - 75% KITTING', '', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
@@ -182,11 +182,11 @@ VALUES
    
    ('FAIPRO', 1, 'MNT-KIT', 'FAIRY PRO (SILENT LINEAR)', '', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
-   pg_read_binary_file('/opt/resources/images/article/12.4Switches-1_1024x1024.webp')::bytea, NULL, NULL),
+   pg_read_binary_file('/opt/resources/images/article/124Switches-1_1024x1024.webp')::bytea, NULL, NULL),
    
    ('PENGPRO', 1, 'PENGPRO', 'PENGUIN PRO (SILENT TACTILE)', '', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
-   pg_read_binary_file('/opt/resources/images/article/12.4Switches-6_1024x1024.webp')::bytea, NULL, NULL),
+   pg_read_binary_file('/opt/resources/images/article/124Switches-6_1024x1024.webp')::bytea, NULL, NULL),
 
    ('KYRBL1', 1, 'KYRBL1', 'KEYREATIVE BLANK KEYSET', '', '', 
    '2023-04-26', 'UNITY', '54165646868', '', 'UNITY', 
