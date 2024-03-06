@@ -190,6 +190,12 @@ INSERT INTO TBL_BUSINESS_PARTNER (CODBUSPAR, TYPBUSPAR, TYPIDEDOC, NROIDEDOC, BU
 ('30709060504', 1, 2, '30709060504', 'TechWhiz Solutions', '', '', '', '2023-05-05', 'Lima 46', 'Av. Tecnología 666', '+51', '944 555 666', 'info@techwhiz.com'),
 ('40201030507', 1, 2, '40201030507', 'Event Horizon Productions', '', '', '', '2023-05-05', 'Lima 47', 'Jr. Eventos 777', '+51', '977 666 777', 'contact@eventhorizon.com');
 
+UPDATE TBL_BUSINESS_PARTNER
+SET
+CODEXT = CODBUSPAR
+WHERE
+0 = 0;
+
 SELECT * FROM TBL_BUSINESS_PARTNER;
 
 DROP TABLE IF EXISTS TBL_BUSPAR_PAYMENT_CONDITION;
