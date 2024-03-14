@@ -193,25 +193,12 @@ BEGIN
 		EXCEPTION 
 			WHEN NO_DATA_FOUND THEN
 				OUT_CODE := -1;
-				OUT_MESSAGE := 'NO HAY FACTOR COMERCIAL DEFINIDO PARA EL IGV, REVISAR EL FACTOR COMERCIAL N°1';
+				OUT_MESSAGE := 'THERE IS NO COMMERCIAL FACTOR DEFINED FOR THE VAT, REVIEW COMMERCIAL FACTOR N°1';
 				OUT_LOG := OUT_MESSAGE;
 				RETURN;
 		END;
     END IF;
 	
-
-	IF V_NUMDOC = 0 AND EXISTS (SELECT 1 FROM pg_class WHERE UPPER(relname) = UPPER('GEN_' || V_SERIE || '_' || V_TYPCOMDOC::TEXT)) THEN
-		SELECT nextval('GEN_' || V_SERIE || '_' || V_TYPCOMDOC::TEXT) INTO V_NUMDOC;
-		ELSE
-		RAISE EXCEPTION 'La secuencia GEN_%_% no existe', V_SERIE, V_TYPCOMDOC;
-	END IF;
-
-	IF V_NUMINT = 0 AND EXISTS (SELECT 1 FROM pg_class WHERE UPPER(relname) = 'GEN_DOCCOM') THEN
-		SELECT nextval('GEN_DOCCOM') INTO V_NUMINT;
-		ELSE
-		RAISE EXCEPTION 'La secuencia GEN_DOCCOM no existe';
-	END IF;
-
 	IF V_NUMINT > 0 THEN
 
 		UPDATE TBL_DOCUMENT_HEADER
@@ -265,6 +252,18 @@ BEGIN
 
 	ELSE
 
+		IF EXISTS (SELECT 1 FROM pg_class WHERE UPPER(relname) = UPPER('GEN_' || V_SERIE || '_' || V_TYPCOMDOC::TEXT)) THEN
+			SELECT nextval('GEN_' || V_SERIE || '_' || V_TYPCOMDOC::TEXT) INTO V_NUMDOC;
+			ELSE
+			RAISE EXCEPTION 'THE SEQUENCE GEN_%_% DOES NOT EXIST', V_SERIE, V_TYPCOMDOC;
+		END IF;
+
+		IF EXISTS (SELECT 1 FROM pg_class WHERE UPPER(relname) = 'GEN_DOCCOM') THEN
+			SELECT nextval('GEN_DOCCOM') INTO V_NUMINT;
+			ELSE
+			RAISE EXCEPTION 'THE GEN_DOCCOM SEQUENCE DOES NOT EXIST';
+		END IF;
+
 		INSERT INTO TBL_DOCUMENT_HEADER (
 			IDCOMPANY, NUMINT, CODEXT, TYPCOMDOC, SITCOMDOC, SERIE, NUMDOC, REGISTDATE, CODBRANCH, CODPLAISS, INGSALCOM, REACOMDOC,
 			CODCUR, EXCHANGERATE, CODBUSPAR, BUSNAM, ADDRES, POSCOD, CODSEL, TYPPAYCON, INCIGV, TASIGV, IMPAFECTO, IMPINAFECTO, IMPEXONERADO, IMPGRATUITO, IMPIGV,
@@ -281,7 +280,7 @@ BEGIN
 
 	OUT_NUMINT := V_NUMINT;
 	OUT_CODE := 0;
-	OUT_MESSAGE := 'EL DOCUMENTO [ ' || V_NUMINT::TEXT || ' ] SE HA GENERADO CON LA SERIE Y NÚMERO ' || V_SERIE || '-' || V_NUMDOC::TEXT;
+	OUT_MESSAGE := 'THE DOCUMENT [ #' || V_NUMINT::TEXT || ' ] IT HAS BEEN GENERATED WITH THE SERIES AND NUMBER ' || V_SERIE || '-' || V_NUMDOC::TEXT;
 	OUT_LOG := OUT_MESSAGE;
 
 	RETURN;
@@ -472,7 +471,7 @@ BEGIN
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = V_NUMINT AND
 			NUMITE = V_NUMITE;
-			
+
 	ELSE
 
 		INSERT INTO TBL_DOCUMENT_DETAIL ( 
@@ -623,10 +622,14 @@ CREATE TYPE REC_SEARCH_DOCUMENT AS (
 	NUMINT BIGINT,
 	NUMDOC BIGINT,
 	SERIE  VARCHAR(5),
+	TYPCOMDOC INTEGER,
 	DESTYPCOMDOC VARCHAR(10),
+	SITCOMDOC INTEGER,
 	DESSITCOMDOC VARCHAR(10),
 	REGISTDATE DATE,
+	INGSALCOM INTEGER,
 	DESINGSALCOM VARCHAR(10),
+	REACOMDOC INTEGER,
 	DESREACOMDOC VARCHAR(10),
 	CODBUSPAR VARCHAR(50),
 	BUSNAM VARCHAR(250),
@@ -661,14 +664,18 @@ BEGIN
 		DH.NUMINT,
 		DH.NUMDOC,
 		DH.SERIE,
+		TDC.TYPCOMDOC,
 		TDC.ABREVI AS DESTYPCOMDOC,
+		SDC.SITCOMDOC,
 		SDC.ABREVI AS DESSITCOMDOC,
 		DH.REGISTDATE,
+		DH.INGSALCOM,
 		CAST(CASE WHEN DH.INGSALCOM = 0 THEN
 			'Ingreso'
 		ELSE
 			'Salida'		
 		END AS VARCHAR(10)) DESINGSALCOM,
+		MDC.REACOMDOC,
 		MDC.ABREVI AS DESREACOMDOC,
 		DH.CODBUSPAR,
 		DH.BUSNAM,
@@ -890,13 +897,55 @@ BEGIN
 	ELSE		
 		UPDATE TBL_DOCUMENT_HEADER
 		SET
-			SITCOMDOC = 5
+			SITCOMDOC = 4
 		WHERE
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = IN_NUMINT;
 			
 		OUT_CODE := 1;
-		OUT_MESSAGE := 'Ok';
+		OUT_MESSAGE := 'SUCCESSFUL CANCELLATION';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+		
+	END IF;	
+	
+EXCEPTION
+	WHEN OTHERS THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
+		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
+END $$;
+
+DROP PROCEDURE IF EXISTS PR_DELETE_INVOICE;
+
+CREATE OR REPLACE PROCEDURE PR_DELETE_INVOICE(
+	IN_IDCOMPANY IN INTEGER,
+	IN_NUMINT IN BIGINT,
+	OUT_CODE OUT INTEGER,
+	OUT_MESSAGE OUT VARCHAR,
+	OUT_LOG OUT VARCHAR
+)
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+BEGIN
+
+	IF NOT EXISTS (SELECT DH.NUMINT FROM TBL_DOCUMENT_HEADER DH WHERE DH.IDCOMPANY = IN_IDCOMPANY AND DH.NUMINT = IN_NUMINT ) THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'Record with ID [ ' || IN_NUMINT::VARCHAR || ' ] does not exists';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+	ELSE		
+		UPDATE TBL_DOCUMENT_HEADER
+		SET
+			SITCOMDOC = 5,
+			NUMDOC = 0
+		WHERE
+			IDCOMPANY = IN_IDCOMPANY AND
+			NUMINT = IN_NUMINT;
+			
+		OUT_CODE := 1;
+		OUT_MESSAGE := 'SUCCESSFUL DELETION';
 		OUT_LOG := OUT_MESSAGE;
 		RETURN;
 		
@@ -920,6 +969,47 @@ END $$;
 --     RAISE NOTICE 'MESSAGE: %', V_MESSAGE;
 -- 	RAISE NOTICE 'LOG: %', V_LOG;
 -- END $$;
+
+DROP PROCEDURE IF EXISTS PR_APROVED_INVOICE;
+
+CREATE OR REPLACE PROCEDURE PR_APROVED_INVOICE(
+	IN_IDCOMPANY IN INTEGER,
+	IN_NUMINT IN BIGINT,
+	OUT_CODE OUT INTEGER,
+	OUT_MESSAGE OUT VARCHAR,
+	OUT_LOG OUT VARCHAR
+)
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+BEGIN
+
+	IF NOT EXISTS (SELECT DH.NUMINT FROM TBL_DOCUMENT_HEADER DH WHERE DH.IDCOMPANY = IN_IDCOMPANY AND DH.NUMINT = IN_NUMINT ) THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'Record with ID [ ' || IN_NUMINT::VARCHAR || ' ] does not exists';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+	ELSE		
+		UPDATE TBL_DOCUMENT_HEADER
+		SET
+			SITCOMDOC = 2
+		WHERE
+			IDCOMPANY = IN_IDCOMPANY AND
+			NUMINT = IN_NUMINT;
+			
+		OUT_CODE := 1;
+		OUT_MESSAGE := 'SUCCESSFUL APPROVAL';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+		
+	END IF;	
+	
+EXCEPTION
+	WHEN OTHERS THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
+		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
+END $$;
 
 INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000001, NULL, 1, 1, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
 INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000002, NULL, 1, 1, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
