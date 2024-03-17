@@ -3,6 +3,99 @@ SET search_path TO smart_shell;
 -- SELECT current_schema();
 
 -- PROCEDURE AND FUNCTION
+
+DROP PROCEDURE IF EXISTS PR_CREATE_DOCUMENT_TRANSACTION;
+
+CREATE OR REPLACE PROCEDURE PR_CREATE_DOCUMENT_TRANSACTION(
+	IN_IDCOMPANY IN INTEGER,
+	IN_CODUSER IN VARCHAR,
+	IN_NUMINT IN BIGINT,
+	IN_OBSERV IN VARCHAR,
+	IN_COMMEN IN VARCHAR,
+	OUT_CODE OUT INTEGER,
+	OUT_MESSAGE OUT VARCHAR,
+	OUT_LOG OUT VARCHAR
+)
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+	V_INDEX INTEGER := 1;
+BEGIN
+
+	-- CALCULATE INDEX
+	BEGIN
+		SELECT 
+			COALESCE(MAX(INDEX),0) + 1
+		INTO STRICT
+			V_INDEX
+		FROM
+			TBL_DOCUMENT_TRANSACTION
+		WHERE
+			IDCOMPANY = IN_IDCOMPANY AND
+			NUMINT = IN_NUMINT;
+			
+		EXCEPTION
+		WHEN no_data_found THEN
+			V_INDEX := 1;
+	END;
+
+	INSERT INTO TBL_DOCUMENT_TRANSACTION
+	SELECT
+		DH.IDCOMPANY,
+		V_INDEX AS INDEX,
+		DH.NUMINT,
+		DH.TYPCOMDOC,
+		DH.SITCOMDOC,
+		DH.SERIE,
+		DH.NUMDOC,
+		DH.REGISTDATE,
+		DH.CODBRANCH,
+		DH.CODPLAISS,
+		DH.INGSALCOM,
+		DH.REACOMDOC,
+		DH.BUSNAM,
+		DH.ADDRES,
+		DH.POSCOD,
+		DH.CODCUR,
+		DH.EXCHANGERATE,
+		DH.INCIGV,
+		DH.TASIGV,
+		DH.CODSEL,
+		DH.TYPPAYCON,
+		DH.IMPLISTPRICE,
+		DH.IMPDESCTOTAL,
+		DH.IMPSALEPRICE,
+		DH.IMPTRIBTOTAL,
+		DH.IMPTOTAL,
+		CASE WHEN V_INDEX = 1 THEN
+			'EMMIT DOCUMENT'
+		ELSE	
+			IN_OBSERV
+		END AS OBSERV,
+		IN_COMMEN,
+		'Y',
+		IN_CODUSER,
+		IN_CODUSER,
+		NOW(),
+		NOW()
+	FROM TBL_DOCUMENT_HEADER DH
+	WHERE
+		DH.IDCOMPANY = IN_IDCOMPANY AND
+		DH.NUMINT = IN_NUMINT;
+
+	OUT_CODE := 1;
+	OUT_MESSAGE := 'SUCCESS';
+	OUT_LOG := OUT_MESSAGE;
+	RETURN;
+
+EXCEPTION
+	WHEN OTHERS THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
+		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
+	RETURN;
+END $$;
+
 DROP PROCEDURE IF EXISTS PR_CREATE_GENERATOR_DOCUMENT;
 
 CREATE OR REPLACE PROCEDURE PR_CREATE_GENERATOR_DOCUMENT(
@@ -39,7 +132,7 @@ BEGIN
 EXCEPTION
 	WHEN OTHERS THEN
 		OUT_CODE := -2;
-		OUT_MESSAGE := 'An unknown error has occurred';
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 END $$;
 
@@ -494,7 +587,7 @@ BEGIN
 EXCEPTION
 	WHEN OTHERS THEN
 		OUT_CODE := -2;
-		OUT_MESSAGE := 'An unknown error has occurred';
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 	RETURN;
 END $$;
@@ -548,6 +641,10 @@ DECLARE
 	V_IMPSALEPRICE NUMERIC(24,4) := 0;
 	V_IMPTRIBTOTAL NUMERIC(24,4) := 0;
 	V_IMPTOTAL NUMERIC(24,4) := 0;
+	V_INDEX INTEGER := 1;
+	V_CODE INTEGER;
+	V_MESSAGE VARCHAR(1000);
+	V_LOG VARCHAR(1000);
 BEGIN
 
 	IF NOT EXISTS (SELECT DH.NUMINT FROM TBL_DOCUMENT_HEADER DH WHERE DH.IDCOMPANY = IN_IDCOMPANY AND DH.NUMINT = IN_NUMINT ) THEN
@@ -585,9 +682,18 @@ BEGIN
 		WHERE
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = IN_NUMINT;
-			
+
+		CALL PR_CREATE_DOCUMENT_TRANSACTION(IN_IDCOMPANY, IN_CODUSER, IN_NUMINT, 'MODIFY DOCUMENT','', V_CODE, V_MESSAGE, V_LOG);
+		
+		IF V_CODE <> 1 THEN
+			OUT_CODE := V_CODE;
+			OUT_MESSAGE := V_MESSAGE;
+			OUT_LOG := V_LOG;
+			RETURN;
+		END IF;
+
 		OUT_CODE := 1;
-		OUT_MESSAGE := 'Ok';
+		OUT_MESSAGE := 'SUCCESS';
 		OUT_LOG := OUT_MESSAGE;
 		RETURN;
 		
@@ -596,7 +702,7 @@ BEGIN
 EXCEPTION
 	WHEN OTHERS THEN
 		OUT_CODE := -2;
-		OUT_MESSAGE := 'An unknown error has occurred';
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 END $$;
 
@@ -881,6 +987,7 @@ CREATE OR REPLACE PROCEDURE PR_CANCEL_INVOICE(
 	IN_IDCOMPANY IN INTEGER,
 	IN_CODUSER IN VARCHAR,
 	IN_NUMINT IN BIGINT,
+	IN_COMMEN IN VARCHAR,
 	OUT_CODE OUT INTEGER,
 	OUT_MESSAGE OUT VARCHAR,
 	OUT_LOG OUT VARCHAR
@@ -898,11 +1005,22 @@ BEGIN
 	ELSE		
 		UPDATE TBL_DOCUMENT_HEADER
 		SET
-			SITCOMDOC = 4
+			SITCOMDOC = 4,
+			UPDATEBY = IN_CODUSER,
+			UPDATEAT = NOW()
 		WHERE
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = IN_NUMINT;
-			
+
+		CALL PR_CREATE_DOCUMENT_TRANSACTION(IN_IDCOMPANY, IN_CODUSER, IN_NUMINT, 'CANCEL DOCUMENT', IN_COMMEN, V_CODE, V_MESSAGE, V_LOG);
+		
+		IF V_CODE <> 1 THEN
+			OUT_CODE := V_CODE;
+			OUT_MESSAGE := V_MESSAGE;
+			OUT_LOG := V_LOG;
+			RETURN;
+		END IF;
+
 		OUT_CODE := 1;
 		OUT_MESSAGE := 'SUCCESSFUL CANCELLATION';
 		OUT_LOG := OUT_MESSAGE;
@@ -923,6 +1041,7 @@ CREATE OR REPLACE PROCEDURE PR_DELETE_INVOICE(
 	IN_IDCOMPANY IN INTEGER,
 	IN_CODUSER IN VARCHAR,
 	IN_NUMINT IN BIGINT,
+	IN_COMMEN IN VARCHAR,
 	OUT_CODE OUT INTEGER,
 	OUT_MESSAGE OUT VARCHAR,
 	OUT_LOG OUT VARCHAR
@@ -941,11 +1060,22 @@ BEGIN
 		UPDATE TBL_DOCUMENT_HEADER
 		SET
 			SITCOMDOC = 5,
-			NUMDOC = 0
+			NUMDOC = 0,
+			UPDATEBY = IN_CODUSER,
+			UPDATEAT = NOW()
 		WHERE
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = IN_NUMINT;
 			
+		CALL PR_CREATE_DOCUMENT_TRANSACTION(IN_IDCOMPANY, IN_CODUSER, IN_NUMINT, 'DELETE DOCUMENT', IN_COMMEN, V_CODE, V_MESSAGE, V_LOG);
+		
+		IF V_CODE <> 1 THEN
+			OUT_CODE := V_CODE;
+			OUT_MESSAGE := V_MESSAGE;
+			OUT_LOG := V_LOG;
+			RETURN;
+		END IF;
+
 		OUT_CODE := 1;
 		OUT_MESSAGE := 'SUCCESSFUL DELETION';
 		OUT_LOG := OUT_MESSAGE;
@@ -995,10 +1125,74 @@ BEGIN
 	ELSE		
 		UPDATE TBL_DOCUMENT_HEADER
 		SET
-			SITCOMDOC = 2
+			SITCOMDOC = 2,
+			UPDATEBY = IN_CODUSER,
+			UPDATEAT = NOW()
 		WHERE
 			IDCOMPANY = IN_IDCOMPANY AND
 			NUMINT = IN_NUMINT;
+			
+		CALL PR_CREATE_DOCUMENT_TRANSACTION(IN_IDCOMPANY, IN_CODUSER, IN_NUMINT, 'APPROVED DOCUMENT', '', V_CODE, V_MESSAGE, V_LOG);
+		
+		IF V_CODE <> 1 THEN
+			OUT_CODE := V_CODE;
+			OUT_MESSAGE := V_MESSAGE;
+			OUT_LOG := V_LOG;
+			RETURN;
+		END IF;
+
+		OUT_CODE := 1;
+		OUT_MESSAGE := 'SUCCESSFUL APPROVAL';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+		
+	END IF;	
+	
+EXCEPTION
+	WHEN OTHERS THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'AN UNKNOWN ERROR HAS OCCURRED';
+		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
+END $$;
+
+DROP PROCEDURE IF EXISTS PR_ONACCOUNT_INVOICE;
+
+CREATE OR REPLACE PROCEDURE PR_ONACCOUNT_INVOICE(
+	IN_IDCOMPANY IN INTEGER,
+	IN_CODUSER IN VARCHAR,
+	IN_NUMINT IN BIGINT,
+	OUT_CODE OUT INTEGER,
+	OUT_MESSAGE OUT VARCHAR,
+	OUT_LOG OUT VARCHAR
+)
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+BEGIN
+
+	IF NOT EXISTS (SELECT DH.NUMINT FROM TBL_DOCUMENT_HEADER DH WHERE DH.IDCOMPANY = IN_IDCOMPANY AND DH.NUMINT = IN_NUMINT ) THEN
+		OUT_CODE := -2;
+		OUT_MESSAGE := 'Record with ID [ ' || IN_NUMINT::VARCHAR || ' ] does not exists';
+		OUT_LOG := OUT_MESSAGE;
+		RETURN;
+	ELSE		
+		UPDATE TBL_DOCUMENT_HEADER
+		SET
+			SITCOMDOC = 3,
+			UPDATEBY = IN_CODUSER,
+			UPDATEAT = NOW()
+		WHERE
+			IDCOMPANY = IN_IDCOMPANY AND
+			NUMINT = IN_NUMINT;
+
+		CALL PR_CREATE_DOCUMENT_TRANSACTION(IN_IDCOMPANY, IN_CODUSER, IN_NUMINT, 'ON ACCOUNT DOCUMENT', '', V_CODE, V_MESSAGE, V_LOG);
+		
+		IF V_CODE <> 1 THEN
+			OUT_CODE := V_CODE;
+			OUT_MESSAGE := V_MESSAGE;
+			OUT_LOG := V_LOG;
+			RETURN;
+		END IF;
 			
 		OUT_CODE := 1;
 		OUT_MESSAGE := 'SUCCESSFUL APPROVAL';
@@ -1014,13 +1208,53 @@ EXCEPTION
 		OUT_LOG := 'ERROR ( ' || SQLSTATE || ' ) : ' || SQLERRM;
 END $$;
 
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000001, NULL, 1, 1, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000002, NULL, 1, 1, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000003, NULL, 1, 1, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000001, NULL, 1, 4, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
 
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000004, NULL, 2, 1, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000005, NULL, 2, 1, 'B001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
-INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000006, NULL, 2, 1, 'B001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, 'This document provides comprehensive information about our latest product release. It includes details on new features, enhancements, and bug fixes. Please review the document for a complete overview.', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000001, 1, 1, 1, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000001, 2, 1, 2, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000001, 3, 1, 3, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'ON ACCOUNT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000001, 4, 1, 4, 'F001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'CANCEL DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000002, NULL, 1, 3, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
+
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000002, 1, 1, 1, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000002, 2, 1, 2, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000002, 3, 1, 3, 'F001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'ON ACCOUNT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000003, NULL, 1, 2, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
+
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000003, 1, 1, 1, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000003, 2, 1, 2, 'F001', 4, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000004, NULL, 2, 4, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6800194159', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000004, 1, 1, 1, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000004, 2, 1, 2, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000004, 3, 1, 3, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'ON ACCOUNT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000004, 4, 1, 4, 'B001', 2, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'CANCEL DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000005, NULL, 2, 3, 'B001', 3, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '2611318250', 2, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 877.0000, 0.0000, 877.0000, 157.8600, 1034.8600, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:04:36.866302', '2024-03-01 23:04:36.866302');
+
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000005, 1, 1, 1, 'B001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000005, 2, 1, 2, 'B001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000005, 3, 1, 3, 'B001', 3, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'ON ACCOUNT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
+
+-- DOCUMENT
+INSERT INTO smart_shell.tbl_document_header (idcompany,numint, codext, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, codcur, exchangerate, codbuspar, busnam, addres, poscod, codsel, typpaycon, incigv, tasigv, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, refere, observ, commen, arcpdf, arccrd, arcxml, status, createby, updateby, createat, updateat) VALUES (1,1000006, NULL, 2, 2, 'B001', 4, '2024-03-01', 1, 1, 1, 1, 'PEN', 3.7800, '65498732', 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', '6843800541', 1, 1, 18.0000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 455.0000, 0.0000, 455.0000, 81.9000, 536.9000, NULL, '', NULL, NULL, NULL, NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 23:12:24.429866', '2024-03-01 23:12:24.429866');
+
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000006, 1, 1, 1, 'B001', 4, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'EMMIT DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+INSERT INTO smart_shell.tbl_document_transaction (idcompany, numint, index, typcomdoc, sitcomdoc, serie, numdoc, registdate, codbranch, codplaiss, ingsalcom, reacomdoc, busnam, addres, poscod, codcur, exchangerate, incigv, tasigv, codsel, typpaycon, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, observ, commen, status, createby, updateby, createat, updateat) VALUES (1,1000006, 2, 1, 2, 'B001', 4, '2024-03-01', 1, 1, 1, 1, 'Pedro Castillo Chavez', 'Av. Tacna 1213', 'Lima 05', 'PEN', 3.7800, 1, 18.0000, '65498732', 1, 697.0000, 0.0000, 697.0000, 125.4600, 822.4600, 'APPROVED DOCUMENT', NULL, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:45.991003', '2024-03-01 22:51:45.991003');
+
 
 INSERT INTO smart_shell.tbl_document_detail (idcompany,numint, numite, typinv, codart, etiqueta, quantity, price, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, status, createby, updateby, createat, updateat) VALUES (1,1000001, 1, 1, 'CNKSET', 0, 4.0000, 69.0000, 276.0000, 0.0000, 0.0000, 0.0000, 49.6800, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, NULL, NULL, NULL, NULL, 276.0000, 0.0000, 276.0000, 49.6800, 325.6800, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:46.529571', '2024-03-01 22:51:46.529571');
 INSERT INTO smart_shell.tbl_document_detail (idcompany,numint, numite, typinv, codart, etiqueta, quantity, price, impafecto, impinafecto, impexonerado, impgratuito, impigv, impisc, imptribadd01, imptribadd02, imptribadd03, imptribadd04, impdesc01, impdesc02, impdesc03, impdesc04, implistprice, impdesctotal, impsaleprice, imptribtotal, imptotal, status, createby, updateby, createat, updateat) VALUES (1,1000001, 2, 1, 'BOW75', 0, 4.0000, 45.0000, 180.0000, 0.0000, 0.0000, 0.0000, 32.4000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, NULL, NULL, NULL, NULL, 180.0000, 0.0000, 180.0000, 32.4000, 212.4000, 'Y', 'ADMIN', 'ADMIN', '2024-03-01 22:51:46.705845', '2024-03-01 22:51:46.705845');
