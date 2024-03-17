@@ -134,15 +134,15 @@ ALTER TABLE TBL_SITUATION_COMMERCIAL_DOCUMENT
 INSERT INTO TBL_SITUATION_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, SITCOMDOC, ABREVI, DESCRI, STATUS)
 VALUES
 (1,1, 1, 'Issued', 'Issued','Y'),
-(1,1, 2, 'Aproved', 'Approved','Y'),
+(1,1, 2, 'Approved', 'Approved','Y'),
 (1,1, 3, 'On Acc.', 'On Account','Y'),
-(1,1, 5, 'Canceled', 'Canceled','Y'),
-(1,1, 6, 'Deleted', 'Deleted','Y'),
+(1,1, 4, 'Canceled', 'Canceled','Y'),
+(1,1, 5, 'Deleted', 'Deleted','Y'),
 (1,2, 1, 'Issued', 'Issued','Y'),
-(1,2, 2, 'Aproved', 'Approved','Y'),
+(1,2, 2, 'Approved', 'Approved','Y'),
 (1,2, 3, 'On Acc.', 'On Account','Y'),
-(1,2, 5, 'Canceled', 'Canceled','Y'),
-(1,2, 6, 'Deleted', 'Deleted','Y');
+(1,2, 4, 'Canceled', 'Canceled','Y'),
+(1,2, 5, 'Deleted', 'Deleted','Y');
 
 SELECT * FROM TBL_SITUATION_COMMERCIAL_DOCUMENT;
 
