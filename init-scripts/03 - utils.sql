@@ -106,8 +106,8 @@ ALTER TABLE TBL_USER
 INSERT INTO TBL_USER(IDCOMPANY,CODUSER,ENCODE,ROLE,NIVEL,CODE,APEPAT,APEMAT,NOMBRE,IMAGE)
 VALUES
 	(1,'ADMIN','$2a$10$weBYqYLZvJ/eoh.YQgEx3.6UqkoPm9MBrll9NilA3UzyaeE7oCtUy','ADMIN',1,'0000000','Calvo','Quispe','Luis Antonio',
-    pg_read_binary_file('/opt/resources/user/test.webp')::bytea),
+    pg_read_binary_file('/opt/resources/images/user/test.webp')::bytea),
 	(1,'TEST','$2a$10$weBYqYLZvJ/eoh.YQgEx3.6UqkoPm9MBrll9NilA3UzyaeE7oCtUy','TEST',1,'0000000','','','Anonymous',
-    pg_read_binary_file('/opt/resources/user/test.webp')::bytea),
+    pg_read_binary_file('/opt/resources/images/user/test.webp')::bytea),
 	(1,'USER','$2a$10$weBYqYLZvJ/eoh.YQgEx3.6UqkoPm9MBrll9NilA3UzyaeE7oCtUy','USER',1,'0000000','Calvo','Quispe','Luis Antonio',
-    pg_read_binary_file('/opt/resources/user/test.webp')::bytea);
+    pg_read_binary_file('/opt/resources/images/user/test.webp')::bytea);
