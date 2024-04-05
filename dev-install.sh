@@ -15,4 +15,4 @@ mkdir -p logs
 mkdir -p backups
 
 # Otorando permisos de ejecucion a los scripts
-chmod +x ./configurations/*.sh
+ip[]
