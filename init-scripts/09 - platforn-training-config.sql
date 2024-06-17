@@ -12,4 +12,3 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- -- Otorgar permisos al usuario sobre la base de datos
 GRANT ALL PRIVILEGES ON DATABASE platform_training TO developer;
-
