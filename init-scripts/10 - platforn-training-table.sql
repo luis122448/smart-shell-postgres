@@ -1,3 +1,6 @@
+-- Content: Script to create tables for platform training
+\c platform_training;
+
 -- Change schema
 SET search_path TO public;
 
