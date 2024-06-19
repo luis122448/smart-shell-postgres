@@ -27,7 +27,7 @@ VALUES (0,1,'RR HH','RECURSOS HUMANOS','Bienvenido al Módulo de Recursos Humano
 - **Procesos de Nómina y Beneficios:** Descubre cómo el módulo gestiona eficientemente procesos relacionados con la nómina, beneficios y otros aspectos clave de recursos humanos.
 
 ¡Únete a nosotros para explorar las potentes herramientas del Módulo de Recursos Humanos, mejorando la eficiencia y transparencia en la gestión de personal con ERP TSI!
-','https://web.grupotsiperu.com.pe:8843/assets/images/recursos-humanos.png','https://media.licdn.com/dms/image/D4E12AQHyEZAvsr2Nmw/article-cover_image-shrink_720_1280/0/1699243930699?e=1724284800&v=beta&t=S_VvDMr-6TEt7vac8fq0Xmw-HNG2nSmcanYZCn-ZR_w','https://media.licdn.com/dms/image/D4E12AQHyEZAvsr2Nmw/article-cover_image-shrink_720_1280/0/1699243930699?e=1724284800&v=beta&t=S_VvDMr-6TEt7vac8fq0Xmw-HNG2nSmcanYZCn-ZR_w','Y');
+','https://web.grupotsiperu.com.pe:8843/assets/images/recursos-humanos.png','https://reisdigital.es/wp-content/uploads/2022/10/herramientas-de-recursos-humanos-para-optimizar-tu-negocio.jpg','https://reisdigital.es/wp-content/uploads/2022/10/herramientas-de-recursos-humanos-para-optimizar-tu-negocio.jpg','Y');
 
 INSERT INTO TBL_EXAM (ID_COMPANY, ID_EXAM, ID_COURSE, TYPE_EXAM, TITLE, DESCRIPTION, MARKDOWN_CONTENT, NUMBER_QUESTIONS, TIME, MIN_SCORE, MAX_ATTEMPTS,STATUS)
 VALUES (0, 1, 1, 'QUIZ', 'Planilla de Recursos Humanos en TSI Oracle', 'Este examen evalúa tu competencia en el manejo de la planilla de recursos humanos en el software TSI Oracle. Aborda temas esenciales como la gestión de nóminas, procesos de personal y cumplimiento normativo.', '', 20, 30, 10, 3,'Y');
