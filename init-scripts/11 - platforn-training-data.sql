@@ -8,26 +8,46 @@ INSERT INTO TBL_COMPANY(ID_COMPANY,NAME,COMPANY,URL_LOGO,STATUS)
 VALUES (0,'DEMO COMPANY','0000000001','','Y');
 
 INSERT INTO TBL_USER(ID_COMPANY,ID_USER,USERNAME,ENCODE,NIVEL,SECRET_CODE,ROLE,NAME,LAST_NAME,URL_PHOTO,EMAIL,ADDRESS,PHONE,COMMENT,REGIST_DATE,EXPIRE_DATE,STATUS)
-VALUES(0,0,'ADMIN','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','ADMIN','ADMINISTRATOR','','https://static.platzi.com/media/avatars/avatars/luis122448_ac7390d4-8893-4a46-9a7c-6be0ef544d85.png','','','','',null,null,'Y'),
-      (0,1,'TEST','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','TEST','TESTING','','https://static.platzi.com/media/avatars/avatars/luis122448_ac7390d4-8893-4a46-9a7c-6be0ef544d85.png','','','','',null,null,'Y'),
-      (0,2,'USER','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','GENERIC USER','','https://static.platzi.com/media/avatars/avatars/luis122448_ac7390d4-8893-4a46-9a7c-6be0ef544d85.png','','','','',null,null,'Y'),
-      (0,3,'ANONYMOUS','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','ANONYMOUS','','https://developer-bucket-luis122448.s3.us-west-2.amazonaws.com/platform-training/icon-anonymous.png','','','','',null,null,'Y'),
-      (0,4,'SUPPORT','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','SUPPORT TSI','','https://developer-bucket-luis122448.s3.us-west-2.amazonaws.com/platform-training/icon-support.png','','','','',null,null,'Y');
+VALUES(0,0,'ADMIN','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','ADMIN','ADMINISTRATOR','','https://luis122448.b-cdn.net/image/generic/person-developer.jpg','','','','',null,null,'Y'),
+      (0,1,'TEST','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','TEST','TESTING','','https://luis122448.b-cdn.net/image/generic/person-online.jpg','','','','',null,null,'Y'),
+      (0,2,'USER','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','GENERIC USER','','https://luis122448.b-cdn.net/image/generic/person-user.jpg','','','','',null,null,'Y'),
+      (0,3,'ANONYMOUS','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','ANONYMOUS','','https://luis122448.b-cdn.net/image/generic/person-question.jpg','','','','',null,null,'Y'),
+      (0,4,'SUPPORT','$2a$10$Ds91T5oYBt3OJ7V068NuDeW.05wmTxLmKhg7CZijAeqDN8GuyIFq2',1,'KXJT7ADTPNAMIQQCOVBMVFIQNCOE2V6X','USER','SUPPORT TSI','','https://luis122448.b-cdn.net/image/generic/person-suport.jpg','','','','',null,null,'Y');
 
 INSERT INTO TBL_TEACHER(ID_COMPANY,ID_TEACHER,NAME,LAST_NAME,URL_PHOTO,STATUS)
-VALUES (0,0,'DEMO TEACHER','','https://static.platzi.com/media/avatars/avatars/luis122448_ac7390d4-8893-4a46-9a7c-6be0ef544d85.png','Y');
+VALUES (0,0,'DEMO TEACHER','','https://luis122448.b-cdn.net/image/generic/person-teacher.jpg','Y');
 
 INSERT INTO TBL_MODULE(ID_COMPANY,ID_MODULE,TITLE,DESCRIPTION, MARKDOWN_CONTENT,URL_ICON,URL_LOGO,URL_BACKGROUND,STATUS)
-VALUES (0,1,'RR HH','RECURSOS HUMANOS','Bienvenido al Módulo de Recursos Humanos en el sistema ERP TSI. En esta sesión, exploraremos las funcionalidades clave de este módulo diseñado para optimizar la gestión de personal en tu empresa. Algunos aspectos destacados de esta clase incluyen:
-
-- **Configuración Inicial:** Aprenderás a realizar la configuración inicial del módulo para adaptarlo a las necesidades específicas de tu empresa.
-
-- **Registro y Seguimiento de Personal:** Exploraremos cómo el sistema facilita el registro y seguimiento de información detallada sobre cada miembro del personal.
-
-- **Procesos de Nómina y Beneficios:** Descubre cómo el módulo gestiona eficientemente procesos relacionados con la nómina, beneficios y otros aspectos clave de recursos humanos.
-
-¡Únete a nosotros para explorar las potentes herramientas del Módulo de Recursos Humanos, mejorando la eficiencia y transparencia en la gestión de personal con ERP TSI!
-','https://web.grupotsiperu.com.pe:8843/assets/images/recursos-humanos.png','https://reisdigital.es/wp-content/uploads/2022/10/herramientas-de-recursos-humanos-para-optimizar-tu-negocio.jpg','https://reisdigital.es/wp-content/uploads/2022/10/herramientas-de-recursos-humanos-para-optimizar-tu-negocio.jpg','Y');
+VALUES (0,1,'RECURSOS HUMANOS','Sistema Integrado de Planilla de Recuersos Humanos',
+'Bienvenido al Módulo de Recursos Humanos del ERP TSI. Este módulo proporciona una solución integral para la gestión de personal, nóminas y procesos de recursos humanos en tu empresa. Explora las herramientas avanzadas y las funcionalidades clave que te permitirán optimizar la gestión de recursos humanos y garantizar el cumplimiento normativo en tu organización.',
+'https://luis122448.b-cdn.net/image/module/planilla-icon.png','','https://luis122448.b-cdn.net/image/module/planilla-background.webp','Y'),
+(0,2,'COMERCIAL','Sistema de Facturacion Electronica con comunicacion a SUNAT',
+'',
+'https://luis122448.b-cdn.net/image/module/facturacion-icon.png','','https://luis122448.b-cdn.net/image/module/facturacion-background.webp','Y'),
+(0,3,'CONTABILIDAD','Sistema de Contabilidad Integrado',
+'',
+'https://luis122448.b-cdn.net/image/module/contabilidad-icon.png','','https://luis122448.b-cdn.net/image/module/contabilidad-background.webp','Y'),
+(0,4,'CUENTAS POR COBRAR','Sistema de gestion de Cuentas por Cobrar Integrado',
+'',
+'https://luis122448.b-cdn.net/image/module/cuenta-por-cobrar-icon.png','','https://luis122448.b-cdn.net/image/module/cuenta-por-cobrar-background.webp','Y'),
+(0,5,'CUENTAS POR PAGAR','Sistema de gestion de Cuentas por Pagar Integrado',
+'',
+'https://luis122448.b-cdn.net/image/module/cuenta-por-pagar-icon.png','','https://luis122448.b-cdn.net/image/module/cuenta-por-pagar-background.webp','Y'),
+(0,6,'LOGISTICA','Sistema de control de inventario, almacenes y distribucion de productos',
+'',
+'https://luis122448.b-cdn.net/image/module/logistica-icon.png','','https://luis122448.b-cdn.net/image/module/logistica-background.webp','Y'),
+(0,7,'CRM','Sistema de Gestion de Relacion con el Cliente',
+'',
+'https://luis122448.b-cdn.net/image/module/crm-icon.png','','https://luis122448.b-cdn.net/image/module/crm-background.webp','Y'),
+(0,8,'PRODUCCION','Sistema de Gestion de Produccion',
+'',
+'https://luis122448.b-cdn.net/image/module/produccion-icon.png','','https://luis122448.b-cdn.net/image/module/produccion-background.webp','Y'),
+(0,9,'ACTIVOS FIJOS','Sistema de Gestion de Activos Fijos',
+'',
+'https://luis122448.b-cdn.net/image/module/activo-fijo-icon.png','','https://luis122448.b-cdn.net/image/module/activos-fijo-background.webp','Y'),
+(0,10,'ANAYTICS','Sistema de Inteligencia de Negocios',
+'',
+'https://luis122448.b-cdn.net/image/module/analytics-icon.png','','https://luis122448.b-cdn.net/image/module/analytics-background.webp','Y');
 
 INSERT INTO TBL_EXAM (ID_COMPANY, ID_EXAM, ID_COURSE, TYPE_EXAM, TITLE, DESCRIPTION, MARKDOWN_CONTENT, NUMBER_QUESTIONS, TIME, MIN_SCORE, MAX_ATTEMPTS,STATUS)
 VALUES (0, 1, 1, 'QUIZ', 'Planilla de Recursos Humanos en TSI Oracle', 'Este examen evalúa tu competencia en el manejo de la planilla de recursos humanos en el software TSI Oracle. Aborda temas esenciales como la gestión de nóminas, procesos de personal y cumplimiento normativo.', '', 20, 30, 10, 3,'Y');
@@ -42,7 +62,8 @@ VALUES (0,1,1,0,'Planilla de Recursos Humanos','Este curso proporciona una forma
 - **Generación de Reportes:** Descubre las herramientas integradas para la generación de reportes detallados y análisis de la planilla.
 
 Únete a nosotros mientras nos sumergimos en la Planilla de Recursos Humanos en el sistema ERP TSI, optimizando la gestión de personal en tu empresa.
-','https://web.grupotsiperu.com.pe:8843/assets/images/recursos-humanos.png','','https://i.ibb.co/L84DDpP/background-rrhh.jpg',1,'Y');
+','https://web.grupotsiperu.com.pe:8843/assets/images/recursos-humanos.png','','https://i.ibb.co/L84DDpP/background-rrhh.jpg',1,'Y'),
+(0, 2, 1, 0, 'Declaraciones y Tributos ( PLAME )', '','','','','',2,'Y');
 
 INSERT INTO TBL_CLASS (ID_COMPANY, ID_CLASS, ID_COURSE, ID_TEACHER, TYPE_CLASS, POSITION, TITLE, DESCRIPTION, MARKDOWN_CONTENT, URL_IMAGE, ID_VIDEO, URL_VIDEO, STATUS)
 VALUES (0, 1, 1, 0, 'PROMO', 1, 'ERP TSI PLANILLA DE RR.HH.', 'Video Promocional', 'Descubre la eficiencia y simplicidad del sistema ERP TSI en el manejo de la Planilla de Recursos Humanos. En esta sesión, exploraremos las funcionalidades clave de la planilla y cómo este sistema puede optimizar la gestión de recursos humanos en tu empresa. Algunos aspectos destacados incluyen:
@@ -202,5 +223,3 @@ VALUES
     (0, 8, 1, 'RESPONSE',4,'01-01-2022',6,0,'No, es un modulo que se contrata independientemente',7,'Y'),
     (0, 9, 1, 'RESPONSE',4,'01-01-2022',2,0,'Para mayor información comunicarse al **999-999-999**',7,'Y'),
     (0, 10, 1, 'CONTRIBUTION',3,'01-01-2022',1,0,'Iniciando con todo!',NULL,'Y');
-
-
