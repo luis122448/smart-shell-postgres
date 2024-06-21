@@ -110,7 +110,25 @@ VALUES
 INSERT INTO TBL_USER_MODULE (ID_COMPANY, ID_USER, ID_MODULE, USER_REGISTER, REGISTER_DATE, START_DATE, END_DATE, EXPIRATION_DATE, LOCKED, BEGIN, PROGRESS, FINALIZED, ADVANCE, REQUIRED_TIME, STATUS)
 VALUES
 (0,0,1,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,1,1,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
-(0,2,1,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
-(0,3,1,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
-(0,4,1,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y');
+(0,0,2,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,3,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,4,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,5,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,6,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,7,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,8,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,9,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,10,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y');
+
+INSERT INTO TBL_USER_MODULE (ID_COMPANY, ID_USER, ID_MODULE, USER_REGISTER, REGISTER_DATE, START_DATE, END_DATE, EXPIRATION_DATE, LOCKED, BEGIN, PROGRESS, FINALIZED, ADVANCE, REQUIRED_TIME, STATUS)
+VALUES
+(0,1,1,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
+(0,1,2,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,3,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,4,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,5,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,6,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,7,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,8,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,9,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,1,10,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y');
