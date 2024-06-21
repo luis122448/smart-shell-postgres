@@ -6,22 +6,22 @@ SET search_path TO public;
 
 INSERT INTO TBL_USER_CLASS (ID_COMPANY, ID_USER, ID_CLASS, USER_REGISTER, REGISTER_DATE, START_DATE, END_DATE, EXPIRATION_DATE, LOCKED, BEGIN, PROGRESS, FINALIZED, ADVANCE, REQUIRED_TIME, STATUS)
 VALUES
-(0,0,1,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,2,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,3,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,4,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,5,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,6,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
+(0,0,1,0,'2022-01-01','2022-01-01',null,null,false,true,true,true,100,0,'Y'),
+(0,0,2,0,'2022-01-01','2022-01-01',null,null,false,true,true,true,100,0,'Y'),
+(0,0,3,0,'2022-01-01','2022-01-01',null,null,false,true,true,false,90,0,'Y'),
+(0,0,4,0,'2022-01-01','2022-01-01',null,null,false,true,true,false,75,0,'Y'),
+(0,0,5,0,'2022-01-01','2022-01-01',null,null,false,true,true,false,45,0,'Y'),
+(0,0,6,0,'2022-01-01','2022-01-01',null,null,false,true,true,false,15,0,'Y'),
 (0,0,7,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,8,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,9,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,10,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,11,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,12,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,13,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,14,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,15,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y'),
-(0,0,16,0,'2022-01-01','2022-01-01',null,null,false,true,false,false,0,0,'Y');
+(0,0,8,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,9,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,10,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,11,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,12,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,13,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,14,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,15,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y'),
+(0,0,16,0,'2022-01-01','2022-01-01',null,null,false,false,false,false,0,0,'Y');
 
 INSERT INTO TBL_USER_CLASS (ID_COMPANY, ID_USER, ID_CLASS, USER_REGISTER, REGISTER_DATE, START_DATE, END_DATE, EXPIRATION_DATE, LOCKED, BEGIN, PROGRESS, FINALIZED, ADVANCE, REQUIRED_TIME, STATUS)
 VALUES
