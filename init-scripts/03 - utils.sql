@@ -2,7 +2,7 @@ SET search_path TO smart_shell;
 
 -- SELECT current_schema();
 
-CREATE OR REPLACE FUNCTION number_to_string(input_number bigint)
+CREATE OR REPLACE FUNCTION integer_to_string(input_number bigint)
   RETURNS text
 AS $$
 DECLARE
@@ -11,25 +11,44 @@ DECLARE
   tens text[] := ARRAY['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 BEGIN
   IF input_number < 0 THEN
-    RETURN 'minus ' || number_to_string(-input_number);
+    RETURN 'minus ' || integer_to_string(-input_number);
   ELSIF input_number < 10 THEN
     RETURN units[input_number + 1];
   ELSIF input_number < 20 THEN
     RETURN teens[input_number - 10 + 1];
   ELSIF input_number < 100 THEN
-    RETURN tens[input_number / 10] || ' ' || number_to_string(input_number % 10);
+    RETURN tens[input_number / 10] || ' ' || integer_to_string(input_number % 10);
   ELSIF input_number < 1000 THEN
-    RETURN units[input_number / 100] || ' hundred ' || number_to_string(input_number % 100);
+    RETURN units[input_number / 100] || ' hundred ' || integer_to_string(input_number % 100);
   ELSIF input_number < 10000 THEN
-    RETURN units[input_number / 1000] || ' thousand ' || number_to_string(input_number % 1000);
+    RETURN units[input_number / 1000] || ' thousand ' || integer_to_string(input_number % 1000);
   ELSE
     RETURN 'number out of range';
   END IF;
 END;
 $$ LANGUAGE plpgsql;
 
--- SELECT number_to_string(1234); -- Output: 'one thousand two hundred thirty four'
--- SELECT number_to_string(9999); -- Output: 'nine thousand nine hundred ninety nine'
+CREATE OR REPLACE FUNCTION number_to_string(input_number numeric)
+  RETURNS text
+AS $$
+DECLARE
+  integer_part bigint;
+  decimal_part int;
+BEGIN
+  integer_part := floor(input_number);
+  decimal_part := round((input_number - integer_part) * 100);
+  
+  IF decimal_part = 0 THEN
+    RETURN integer_to_string(integer_part);
+  ELSE
+    RETURN integer_to_string(integer_part) || ' ' || decimal_part::text || '/100';
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Pruebas
+-- SELECT number_to_string(1234.56); -- Output: 'one thousand two hundred thirty four + 56/100'
+-- SELECT number_to_string(9999.99); -- Output: 'nine thousand nine hundred ninety nine + 99/100'
 
 DROP TABLE IF EXISTS TBL_COMPANY_INFO;
 
