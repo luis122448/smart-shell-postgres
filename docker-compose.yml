@@ -1,5 +1,5 @@
 services:
-  postgres:
+  smart-shell-postgres:
     container_name: smart-shell-postgres
     env_file:
       - ./.env
