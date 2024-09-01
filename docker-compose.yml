@@ -1,5 +1,5 @@
 services:
-  smart-shell-postgres:
+  app:
     container_name: smart-shell-postgres
     env_file:
       - ./.env
@@ -13,11 +13,13 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./logs:/opt/logs
-      - ./backups:/opt/backups
+      - /var/www/volumes/smart-shell/smart-shell-postgres/data:/var/lib/postgresql/data
+      - /var/www/volumes/smart-shell/smart-shell-postgres/logs:/opt/logs
+      - /var/www/volumes/smart-shell/smart-shell-postgres/backups:/opt/backups
+      - /var/www/volumes/smart-shell/smart-shell-postgres/configurations:/opt/configurations
     networks:
-      - smart-shell-net  # Conexión a la red smart-shell-net
+      - smart-shell-net
 
 networks:
-  smart-shell-net:  # Definición de la red smart-shell-net
-    external: true   # Indicador de que la red ya está creada externamente
+  smart-shell-net:
+    external: true
