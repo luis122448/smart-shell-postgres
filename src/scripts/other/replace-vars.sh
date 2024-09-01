@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if POSTGRES_DB is set
+if [ -z "$POSTGRES_DB" ]; then
+  echo "POSTGRES_DB variable is not set!"
+  exit 1
+fi
+
 # Path to the directory where SQL scripts are located
 SCRIPTS_DIR="/docker-entrypoint-initdb.d"
 

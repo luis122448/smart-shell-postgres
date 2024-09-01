@@ -1,10 +1,13 @@
 FROM postgres
 LABEL luis122448 <luis122448gmail.com>
 
+ARG POSTGRES_DB
+ENV POSTGRES_DB=$POSTGRES_DB
+
 # Install cron
 RUN apt-get update && apt-get install -y cron
 
-COPY ./src/scripts/docker ./docker-entrypoint-initdb.d
+COPY ./src/scripts/docker /docker-entrypoint-initdb.d
 COPY ./resources /opt/resources
 COPY ./src/scripts/other /opt/scripts/other
 

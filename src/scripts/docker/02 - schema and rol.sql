@@ -1,4 +1,3 @@
-ALTER DATABASE ${POSTGRES_DB} SET search_path TO ${POSTGRES_DB};
 ALTER DATABASE ${POSTGRES_DB} SET client_encoding TO 'UTF8';
 ALTER DATABASE ${POSTGRES_DB} SET timezone TO 'America/Lima';
 ALTER DATABASE ${POSTGRES_DB} SET datestyle TO 'ISO, DMY';
@@ -8,6 +7,8 @@ ALTER DATABASE ${POSTGRES_DB} SET standard_conforming_strings TO 'on';
 
 -- Schema
 CREATE SCHEMA smart_shell;
+
+ALTER DATABASE ${POSTGRES_DB} SET search_path TO smart_shell;
 
 -- Rol and Privileges
 CREATE ROLE role_smart_shell;
