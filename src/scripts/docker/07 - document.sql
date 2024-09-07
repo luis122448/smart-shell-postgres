@@ -25,15 +25,11 @@ ALTER TABLE TBL_TYPE_COMMERCIAL_DOCUMENT
 INSERT INTO TBL_TYPE_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, ABREVI, DESCRI, CODEXT, OBSERV, COMMEN,STATUS)
 VALUES
 (1,1, 'Invoice', 'Invoice', NULL, 'Document used to support sales', 'Invoice','Y'),
-(1,2, 'Receipt', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt','Y'),
-(1,3, 'Cre Note', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note','Y'),
-(1,4, 'Deb Note', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note','Y'),
-(1,5, 'Purc Ord', 'Purchase Order', NULL, 'Document used to request the acquisition of goods and services', 'Purchase Order','Y'),
-(1,6, 'Quota', 'Quotation', NULL, 'Document used to present a budget for goods and services', 'Quotation','Y'),
-(1,7, 'Retod', 'Return Order', NULL, 'Document used to request the return of goods and services', 'Return Order','Y'),
-(1,8, 'Grin', 'Internal Goods Receipt', NULL, 'Document used for internal transfer of goods', 'Internal Goods Receipt','Y'),
-(1,9, 'Good', 'Goods Receipt', NULL, 'Document used for the transfer of goods', 'Goods Receipt','Y'),
-(1,10, 'Invtak', 'Inventory Taking', NULL, 'Document used to record the inventory count', 'Inventory Taking','Y');
+(1,3, 'Receipt', 'Receipt', NULL, 'Document used to support sales for amounts below a specific limit', 'Receipt','Y'),
+(1,7, 'Cre Note', 'Credit Note', NULL, 'Document used to record the reduction of a debt', 'Credit Note','Y'),
+(1,8, 'Deb Note', 'Debit Note', NULL, 'Document used to record the increase of a debt', 'Debit Note','Y'),
+(1,111, 'Inv Tak', 'Inventory Taking', NULL, 'Document used to record the inventory count', 'Inventory Taking','Y'),
+(1,103, 'Int Gui', 'Internal Guide', NULL, 'Document used to record the inventory count', 'Internal Guide','Y');
 
 SELECT * FROM TBL_TYPE_COMMERCIAL_DOCUMENT;
 
@@ -68,9 +64,17 @@ VALUES
     pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y','Y'),
 (1,1,2,'INV A4-V','Invoice Format (A4 - Vertical)','invoce-a4-vertical.jrxml','https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/23/posts/27333/final_image/word-invoice-final.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.pdf')::bytea,'','','N','Y'),
-(1,2,1,'INV A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg',
+(1,2,1,'REC A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y','Y'),
-(1,2,2,'INV A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','https://img.freepik.com/free-vector/gradient-real-estate-invoice_23-2149165551.jpg',
+(1,2,2,'REC A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','https://img.freepik.com/free-vector/gradient-real-estate-invoice_23-2149165551.jpg',
+    pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.pdf')::bytea,'','','Y','Y');
+
+
+INSERT INTO TBL_FORMAT_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC,TYPFORMAT,ABREVI,DESCRI,FORMAT,URL,IMAGE,PDF,OBSERV,COMMEN,DEFAUL,STATUS)
+VALUES
+(1,103,1,'IG A4-V','Internal Guide Format (A4 - Vertical)','internal-guide-a4-horizontal.jrxml','',
+    pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y','Y'),
+(1,111,1,'TI A4-V','Inventory Taking Format (A4 - Vertical)','inventory-taking-a4-vertical.jrxml','',
     pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.pdf')::bytea,'','','Y','Y');
 
 DROP TABLE IF EXISTS TBL_SERIE_COMMERCIAL_DOCUMENT;
@@ -104,8 +108,13 @@ INSERT INTO TBL_SERIE_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, SERIE, CODBRANCH
 VALUES 
 	(1,1, 'F001', 1, 'FAC-01', 'Electronic Invoice', 'F001', 'Y', 'A', 0, 'Y', 1,'Y'),
 	(1,1, 'F002', 1, 'FAC-02', 'Manual Invoice', 'F002', 'Y', 'M', 0, 'N', 1,'Y'),
-	(1,2, 'B001', 1, 'BOL-01', 'Electronic Receipt', 'B001', 'Y', 'A', 0, 'Y', 1,'Y'),
-	(1,2, 'B002', 1, 'BOL-02', 'Manual Receipt', 'B002', 'Y', 'M', 0, 'N', 1,'Y');
+	(1,3, 'B001', 1, 'BOL-01', 'Electronic Receipt', 'B001', 'Y', 'A', 0, 'Y', 1,'Y'),
+	(1,3, 'B002', 1, 'BOL-02', 'Manual Receipt', 'B002', 'Y', 'M', 0, 'N', 1,'Y');
+
+INSERT INTO TBL_SERIE_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, SERIE, CODBRANCH, ABREVI, DESCRI, CODEXT, DOCELECTR, TYPCORREL, NROCORREL, DEFAUL, TYPFORMAT, STATUS)
+VALUES 
+	(1,111, '111', 1, '111', 'Inventory Taking Stanrd', '111', 'Y', 'A', 0, 'Y', 1,'Y'),
+	(1,103, '111', 1, '111', 'Internal Guide', '111', 'Y', 'M', 0, 'N', 1,'Y');
 
 SELECT * FROM TBL_SERIE_COMMERCIAL_DOCUMENT;
 
@@ -130,7 +139,7 @@ CREATE TABLE TBL_SITUATION_COMMERCIAL_DOCUMENT(
 ALTER TABLE TBL_SITUATION_COMMERCIAL_DOCUMENT
 	ADD CONSTRAINT PK_SITUATION_COMMERCIAL_DOCUMENT PRIMARY KEY (IDCOMPANY,TYPCOMDOC,SITCOMDOC);
 	
--- DOCUMENT SITUATION
+-- DOCUMENT SITUATION ( 1, 2 )
 INSERT INTO TBL_SITUATION_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, SITCOMDOC, ABREVI, DESCRI, STATUS)
 VALUES
 (1,1, 1, 'Issued', 'Issued','Y'),
@@ -138,11 +147,21 @@ VALUES
 (1,1, 3, 'On Acc.', 'On Account','Y'),
 (1,1, 4, 'Canceled', 'Canceled','Y'),
 (1,1, 5, 'Deleted', 'Deleted','Y'),
-(1,2, 1, 'Issued', 'Issued','Y'),
-(1,2, 2, 'Approved', 'Approved','Y'),
-(1,2, 3, 'On Acc.', 'On Account','Y'),
-(1,2, 4, 'Canceled', 'Canceled','Y'),
-(1,2, 5, 'Deleted', 'Deleted','Y');
+(1,3, 1, 'Issued', 'Issued','Y'),
+(1,3, 2, 'Approved', 'Approved','Y'),
+(1,3, 3, 'On Acc.', 'On Account','Y'),
+(1,3, 4, 'Canceled', 'Canceled','Y'),
+(1,3, 5, 'Deleted', 'Deleted','Y');
+
+-- DOCUMENT SITUATION ( 111, 103 )
+INSERT INTO TBL_SITUATION_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, SITCOMDOC, ABREVI, DESCRI, STATUS)
+VALUES
+(1,111, 1, 'Issued', 'Issued','Y'),
+(1,111, 2, 'In Kardex', 'In Kardex','Y'),
+(1,111, 4, 'Canceled', 'Canceled','Y'),
+(1,103, 1, 'Issued', 'Issued','Y'),
+(1,103, 2, 'In Kardex', 'In Kardex','Y'),
+(1,103, 4, 'Canceled', 'Canceled','Y');
 
 SELECT * FROM TBL_SITUATION_COMMERCIAL_DOCUMENT;
 
@@ -322,14 +341,21 @@ VALUES
 	(1,1, 1, 5, 'Free Trans', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...','N'),
 	(1,1, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
 	(1,1, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N'),
-	(1,2, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)','Y'),
-	(1,2, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when the delivery is made after the sale','N'),
-	(1,2, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent','N'),
-	(1,2, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service','N'),
-	(1,2, 1, 5, 'Free Tran', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...','N'),
-	(1,2, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
-	(1,2, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N');
-	
+	(1,3, 1, 1, 'Sale Dire', 'Direct Sale', NULL, 'Used when making a direct sale (cash on delivery)','Y'),
+	(1,3, 1, 2, 'Sale Defe', 'Deferred Sale', NULL, 'Used when the delivery is made after the sale','N'),
+	(1,3, 1, 3, 'Commission', 'Commission', NULL, 'Used when the sale is made by a commission agent','N'),
+	(1,3, 1, 4, 'Service', 'Service', NULL, 'Used in the sale of a service','N'),
+	(1,3, 1, 5, 'Free Tran', 'Free Transfer', NULL, 'Used for gifts, giveaways, vouchers, ...','N'),
+	(1,3, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
+	(1,3, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N');
+
+INSERT INTO TBL_REASON_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, INOUT, REACOMDOC, ABREVI, DESCRI, CODEXT, OBSERV,DEFAUL)
+VALUES
+	(1,111, 0, 1, 'Inv Tak', 'Inventory Taking', NULL, 'Document used to record the inventory count','Y'),
+	(1,103, 0, 1, 'Ig Purch', 'Purchase', NULL, 'Used when efe delivery is made after the sale','Y'),
+	(1,103, 0, 2, 'Ig Dev', 'Return', NULL, 'Used when efe delivery is made after the sale','Y'),
+	(1,103, 1, 1, 'Ig Del', 'Delivery', NULL, 'Used when efe delivery is made after the sale','N');
+
 SELECT * FROM TBL_REASON_COMMERCIAL_DOCUMENT;
 
 DROP TABLE IF EXISTS TBL_SELLER;
