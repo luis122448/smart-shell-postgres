@@ -321,6 +321,11 @@ CREATE TABLE TBL_REASON_COMMERCIAL_DOCUMENT(
 	CODEXT VARCHAR(100),
 	OBSERV VARCHAR(500),
 	COMMEN VARCHAR(4000),
+	TYPBUSPAR INTEGER DEFAULT 0,
+	DOCORIGIN INTEGER DEFAULT 0,
+	TYPMETHODCOST INTEGER DEFAULT 0,
+	VALPRICE INTEGER DEFAULT 0,
+	CODCUR VARCHAR(5),
 	DEFAUL VARCHAR(1) DEFAULT 'N',
 	STATUS VARCHAR(1) DEFAULT 'Y',
 	CREATEBY VARCHAR(10) DEFAULT 'ADMIN',
@@ -349,7 +354,7 @@ VALUES
 	(1,3, 1, 6, 'Sample', 'Sample', NULL, 'Used when distributing a sample or trial','N'),
 	(1,3, 1, 7, 'Change Doc', 'Document Change', NULL, 'Used when a non-editable error in a previously issued document needs to be corrected','N');
 
-INSERT INTO TBL_REASON_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, INOUT, REACOMDOC, ABREVI, DESCRI, CODEXT, OBSERV,DEFAUL)
+INSERT INTO TBL_REASON_COMMERCIAL_DOCUMENT (IDCOMPANY,TYPCOMDOC, INOUT, REACOMDOC, ABREVI, DESCRI, CODEXT, OBSERV, DEFAUL)
 VALUES
 	(1,111, 0, 1, 'Inv Tak', 'Inventory Taking', NULL, 'Document used to record the inventory count','Y'),
 	(1,103, 0, 1, 'Ig Purch', 'Purchase', NULL, 'Used when efe delivery is made after the sale','Y'),
