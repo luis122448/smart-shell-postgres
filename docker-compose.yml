@@ -7,13 +7,13 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        POSTGRES_DB: $POSTGRES_DATABASE
+        POSTGRES_DB: $SMART_SHELL_POSTGRES_DATABASE
     environment:
-      POSTGRES_USER: $POSTGRES_USERNAME
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $POSTGRES_DATABASE
+      POSTGRES_USER: $SMART_SHELL_POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $SMART_SHELL_POSTGRES_PASSWORD
+      POSTGRES_DB: $SMART_SHELL_POSTGRES_DATABASE
     ports:
-      - "5432:5432"
+      - "${SMART_SHELL_POSTGRES_PORT}:5432"
     volumes:
       - /var/www/volumes/smart-shell/smart-shell-postgres/data:/var/lib/postgresql/data
       - /var/www/volumes/smart-shell/smart-shell-postgres/logs:/opt/logs
@@ -21,6 +21,7 @@ services:
       - /var/www/volumes/smart-shell/smart-shell-postgres/configurations:/opt/configurations
     networks:
       - smart-shell-net
+    restart: unless-stopped
 
 networks:
   smart-shell-net:
