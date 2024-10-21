@@ -115,7 +115,7 @@ Asimismo no se olvide de modificar las variables de entono, en asi archivo .env
 
 2. **Conexion a la Base de Datos**
     ```bash
-        sudo docker exec -it smart-shell-postgres bash
+        sudo docker run -it --network smart-shell-net --rm postgres:latest psql -h smart-shell-postgres -U $USER -d smart_shell
     ```
 
 3. **Verificando las versiones**
