@@ -64,9 +64,9 @@ VALUES
     pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y','Y'),
 (1,1,2,'INV A4-V','Invoice Format (A4 - Vertical)','invoce-a4-vertical.jrxml','https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/23/posts/27333/final_image/word-invoice-final.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.pdf')::bytea,'','','N','Y'),
-(1,2,1,'REC A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg',
+(1,3,1,'REC A4-H','Receipt Format (A4 - Horizontal)','receipt-a4-horizontal.jrxml','https://img.freepik.com/free-vector/minimal-yellow-invoice-template-vector-design_1017-12070.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-horizontal.pdf')::bytea,'','','Y','Y'),
-(1,2,2,'REC A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','https://img.freepik.com/free-vector/gradient-real-estate-invoice_23-2149165551.jpg',
+(1,3,2,'REC A4-V','Receipt Format (A4 - Vertical)','receipt-a4-vertical.jrxml','https://img.freepik.com/free-vector/gradient-real-estate-invoice_23-2149165551.jpg',
     pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.jpg')::bytea,pg_read_binary_file('/opt/resources/report/invoce-a4-vertical.pdf')::bytea,'','','Y','Y');
 
 
@@ -174,8 +174,8 @@ CREATE TABLE TBL_CURRENCY(
 	DESCRI VARCHAR(250),
 	CODEXT VARCHAR(100),
 	SYMBOL VARCHAR(5),
+	DEFAUL VARCHAR(1) DEFAULT 'N',
 	STATUS VARCHAR(1) DEFAULT 'Y',
-	DEFAUL VARCHAR(1) DEFAULT 'Y',
 	CREATEBY VARCHAR(10) DEFAULT 'ADMIN',
 	UPDATEBY VARCHAR(10) DEFAULT 'ADMIN',
 	CREATEAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

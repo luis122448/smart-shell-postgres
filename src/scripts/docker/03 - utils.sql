@@ -130,3 +130,41 @@ VALUES
     pg_read_binary_file('/opt/resources/images/user/test.webp')::bytea),
 	(1,'USER','$2a$10$weBYqYLZvJ/eoh.YQgEx3.6UqkoPm9MBrll9NilA3UzyaeE7oCtUy','USER',1,'0000000','Calvo','Quispe','Luis Antonio',
     pg_read_binary_file('/opt/resources/images/user/test.webp')::bytea);
+
+DROP TABLE IF EXISTS TBL_BRANCH;
+
+CREATE TABLE TBL_BRANCH (
+    IDCOMPANY INTEGER,
+    CODBRANCH INTEGER,
+    ABREVI VARCHAR(10),
+    DESCRI VARCHAR(250),
+    CODEXT VARCHAR(100),
+    ADDRES VARCHAR(255),
+    POSCOD VARCHAR(20),
+    PHONE VARCHAR(255),
+    EMAIL VARCHAR(255),
+    CODWAREHOUSE INTEGER,
+    GLOSSDOCUMENT BYTEA,
+    GLOSSTICKET BYTEA,
+    OBSERV VARCHAR(500),
+	  DEFAUL VARCHAR(1) DEFAULT 'N',
+    STATUS VARCHAR(1) DEFAULT 'Y',
+    CREATEBY VARCHAR(10) DEFAULT 'ADMIN',
+    UPDATEBY VARCHAR(10) DEFAULT 'ADMIN',
+    CREATEAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UPDATEAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP	
+);
+
+ALTER TABLE TBL_BRANCH
+  ADD CONSTRAINT PK_BRANCH PRIMARY KEY (IDCOMPANY,CODBRANCH);
+
+INSERT INTO TBL_BRANCH(IDCOMPANY,CODBRANCH,ABREVI,DESCRI,CODEXT,ADDRES,POSCOD,PHONE,EMAIL,CODWAREHOUSE,GLOSSDOCUMENT,GLOSSTICKET,DEFAUL)
+VALUES
+  (1,1,'Prin','Principal','0001','Peru, Lima, Lima','15319','0000000','email@gmail.com',1,
+    pg_read_binary_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
+    pg_read_binary_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
+    'Y'),
+  (1,2,'Altr','Alternative','0002','Peru, Lima, Lima','15319','0000000','email@gmail.com',1,
+    pg_read_binary_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
+    pg_read_binary_file('/opt/resources/archives/smart-shell-240x960.jpg')::bytea,
+    'N');
