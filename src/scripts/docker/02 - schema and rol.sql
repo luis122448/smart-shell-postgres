@@ -19,8 +19,8 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA smart_shell
     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO role_smart_shell;
 
 -- User and Privileges
-CREATE USER developer_smart_shell WITH PASSWORD '1073741824' LOGIN;
-CREATE USER user_smart_shell WITH PASSWORD '1073741824' LOGIN;
+CREATE USER developer_smart_shell WITH PASSWORD {$POSTGRES_PASSWORD} LOGIN;
+CREATE USER user_smart_shell WITH PASSWORD {$POSTGRES_PASSWORD} LOGIN;
 
 -- Assign role
 GRANT role_smart_shell TO developer_smart_shell;

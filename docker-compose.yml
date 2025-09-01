@@ -6,8 +6,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-      args:
-        POSTGRES_DB: $SMART_SHELL_POSTGRES_DATABASE
     environment:
       POSTGRES_USER: $SMART_SHELL_POSTGRES_USERNAME
       POSTGRES_PASSWORD: $SMART_SHELL_POSTGRES_PASSWORD
