@@ -11,7 +11,8 @@ COPY ./resources /opt/resources
 COPY ./src/scripts/other /opt/scripts/other
 
 # Make the script executable
-RUN chown -R postgres:postgres ./docker-entrypoint-initdb.d/*.sh
+RUN chown -R postgres:postgres /docker-entrypoint-initdb.d \
+    && chmod -R 755 /docker-entrypoint-initdb.d
 
 RUN mkdir -p /opt/data
 RUN mkdir -p /opt/configurations
