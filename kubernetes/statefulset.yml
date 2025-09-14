@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres-sts
+  name: postgres-statefulset
   namespace: smart-shell-production
 spec:
   # This MUST match the name of the Headless Service defined above.
   # It tells the StatefulSet which service controls the network domain for its pods.
-  serviceName: "postgres-svc"
+  serviceName: "postgres-service"
   replicas: 1 # Start with one replica for a simple setup
   
   # The StatefulSet's own selector. It will manage any pods that
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: luis122448/smart-shell-postgres:v1.0.0
+          image: luis122448/smart-shell-postgres:latest
           ports:
             - containerPort: 5432
               name: postgres
