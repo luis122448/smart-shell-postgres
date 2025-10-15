@@ -13,13 +13,19 @@ services:
     ports:
       - "${SMART_SHELL_POSTGRES_PORT}:5432"
     volumes:
-      - /var/www/volumes/smart-shell/smart-shell-postgres/data:/var/lib/postgresql/data
-      - /var/www/volumes/smart-shell/smart-shell-postgres/logs:/opt/logs
-      - /var/www/volumes/smart-shell/smart-shell-postgres/backups:/opt/backups
-      - /var/www/volumes/smart-shell/smart-shell-postgres/configurations:/opt/configurations
+      - postgres-data:/var/lib/postgresql/data
+      - postgres-logs:/opt/logs
+      - postgres-backups:/opt/backups
+      - postgres-configurations:/opt/configurations
     networks:
       - smart-shell-net
     restart: unless-stopped
+
+volumes:
+  postgres-data:
+  postgres-logs:
+  postgres-backups:
+  postgres-configurations:
 
 networks:
   smart-shell-net:
